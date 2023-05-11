@@ -3,9 +3,9 @@ import { TextInput as RNTextInput, TextInputProps, View, ViewStyle } from 'react
 
 import styles from './styles';
 
-interface ITextInputComponent {
-  secure?: boolean,
-  additionStyles?: ViewStyle,
+type ITextInputComponent = {
+  secure?: boolean;
+  additionStyles?: ViewStyle;
 };
 
 const TextInput: React.FC<TextInputProps & ITextInputComponent> = ({ value, onChangeText, placeholder, secure, additionStyles = {} }) => {

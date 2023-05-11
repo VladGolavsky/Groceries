@@ -8,7 +8,17 @@ import TextInput from 'src/components/TextInput';
 import styles from './styles';
 import Button from 'src/components/Button';
 
-const SignInScreen = ({
+type ISignInScreen = {
+  email: string;
+  setEmail: (text: string) => void;
+  password: string;
+  setPassword: (text: string) => void;
+  onSignIn: () => void;
+  onUseWithoutAccount: () => void;
+  goToSignUp: () => void;
+}
+
+const SignInScreen: React.FC<ISignInScreen> = ({
   email,
   setEmail,
   password,
@@ -16,14 +26,6 @@ const SignInScreen = ({
   onSignIn,
   onUseWithoutAccount,
   goToSignUp,
-} : {
-  email: string,
-  setEmail: (text: string) => void,
-  password: string,
-  setPassword: (text: string) => void,
-  onSignIn: () => void,
-  onUseWithoutAccount: () => void,
-  goToSignUp: () => void,
 }) => {
   return (
     <Container>

@@ -1,12 +1,14 @@
 import { StyleSheet } from "react-native";
-import { moderateScale, verticalScale } from "react-native-size-matters";
+import { moderateScale, moderateVerticalScale, verticalScale } from "react-native-size-matters";
+
+import { black } from "src/constants/colors";
 
 export default StyleSheet.create({
   container: {
     paddingHorizontal: moderateScale(15),
   },
   textLogo: {
-    marginTop: '25%',
+    marginTop: moderateVerticalScale(80),
     textAlign: 'center',
     fontSize: moderateScale(45),
     textTransform: 'uppercase',
@@ -22,7 +24,7 @@ export default StyleSheet.create({
   },
   textUseWithoutAccount: {
     fontWeight: '700',
-    color: '#000',
+    color: black,
     textAlign: 'center',
     textDecorationLine: 'underline',
   },
@@ -34,7 +36,7 @@ export default StyleSheet.create({
     paddingVertical: moderateScale(5),
   },
   textSignUp: {
-    color: '#000',
+    color: black,
     fontSize: moderateScale(15),
     fontWeight: '700',
   },

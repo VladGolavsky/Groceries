@@ -1,12 +1,14 @@
 import { StyleSheet } from "react-native";
-import { moderateScale, verticalScale } from "react-native-size-matters";
+import { moderateScale, moderateVerticalScale, verticalScale } from "react-native-size-matters";
+
+import { black } from "src/constants/colors";
 
 export default StyleSheet.create({
   container: {
     paddingHorizontal: moderateScale(15),
   },
   textLogo: {
-    marginTop: '25%',
+    marginTop: moderateVerticalScale(80),
     textAlign: 'center',
     fontSize: moderateScale(45),
     textTransform: 'uppercase',
@@ -25,7 +27,7 @@ export default StyleSheet.create({
   },
   buttonBackText: {
     fontSize: moderateScale(20),
-    color: '#000',
+    color: black,
     fontWeight: '600',
   },
 });

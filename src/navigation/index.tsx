@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, createNavigationContainerRef } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Root from 'src/Root';
@@ -9,14 +9,22 @@ import SignUp from 'src/screens/SignUp';
 
 const MainStack = createNativeStackNavigator();
 
+const optionsWithoutHeader = {
+  header: () => null
+};
+
+export const navigationRef = createNavigationContainerRef();
+
+
 export default () => {
-  
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      ref={navigationRef}
+    >
       <MainStack.Navigator>
-        <MainStack.Screen name="Root" component={Root} options={{ header: () => null }} />
-        <MainStack.Screen name="SignIn" component={SignIn} options={{ header: () => null }} />
-        <MainStack.Screen name="SignUp" component={SignUp} options={{ header: () => null }} />
+        <MainStack.Screen name="Root" component={Root} options={optionsWithoutHeader} />
+        <MainStack.Screen name="SignIn" component={SignIn} options={optionsWithoutHeader} />
+        <MainStack.Screen name="SignUp" component={SignUp} options={optionsWithoutHeader} />
       </MainStack.Navigator>
     </NavigationContainer>
   );
