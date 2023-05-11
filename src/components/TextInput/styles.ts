@@ -13,6 +13,7 @@ export default StyleSheet.create({
   textInput: {
     fontSize: scale(16),
     color: black,
+    padding: 0,
   },
   textInputWithSecure: {
     width: '90%'

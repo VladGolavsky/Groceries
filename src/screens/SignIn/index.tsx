@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import SplashScreen from 'react-native-splash-screen';
 
 import SignInScreen from './SignIn';
 
@@ -7,6 +8,10 @@ import { INavigation } from 'src/interfaces/navigation.interface';
 const SignIn: React.FC<INavigation> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
 
   const onSignIn = () => {
 
