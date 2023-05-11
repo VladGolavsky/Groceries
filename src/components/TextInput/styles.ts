@@ -18,4 +18,12 @@ export default StyleSheet.create({
   textInputWithSecure: {
     width: '90%'
   },
+  containerWithSecure: {
+    flexDirection: 'row',
+  },
+  secureButton: {
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    width: '10%',
+  },
 });

@@ -11,6 +11,7 @@ export default StyleSheet.create({
     paddingTop: moderateVerticalScale(80),
     textAlign: 'center',
     fontSize: moderateScale(45),
+    color: black,
     textTransform: 'uppercase',
   },
   textInputsContainer: {
@@ -23,7 +24,6 @@ export default StyleSheet.create({
     marginBottom: verticalScale(20)
   },
   buttonGoBack: {
-    paddingHorizontal: moderateScale(10),
   },
   buttonBackText: {
     fontSize: moderateScale(20),

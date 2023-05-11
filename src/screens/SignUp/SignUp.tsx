@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import Icon from 'react-native-vector-icons/Entypo';
 
 import Container from 'src/components/Container';
 import DismissKeyboard from 'src/components/DismissKeyboard';
@@ -7,6 +8,8 @@ import TextInput from 'src/components/TextInput';
 
 import styles from './styles';
 import Button from 'src/components/Button';
+import { black } from 'src/constants/colors';
+import { moderateScale } from 'react-native-size-matters';
 
 type ISignUpScreen = {
   email: string;
@@ -37,8 +40,8 @@ const SignUpScreen: React.FC<ISignUpScreen> = ({
     <Container>
       <DismissKeyboard>
         <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={Platform.OS === 'android' ? 30 : 50} style={styles.container}>
-          <TouchableOpacity onPress={goBack} style={styles.buttonGoBack}>
-            <Text style={styles.buttonBackText}>{'<'}</Text>
+          <TouchableOpacity onPress={goBack} style={styles.buttonGoBack} hitSlop={10}>
+            <Icon name="chevron-left" color={black} size={moderateScale(22)}/>
           </TouchableOpacity>
           <Text style={styles.textLogo}>Groceries</Text>
           <View style={styles.textInputsContainer}>
@@ -59,13 +62,13 @@ const SignUpScreen: React.FC<ISignUpScreen> = ({
               onChangeText={setPassword}
               additionStyles={styles.textInputAdditionStyles}
               placeholder="Password"
-              secure
+              withSecure
             />
             <TextInput
               value={confirmPassword}
               onChangeText={setConfirmPassword}
               placeholder="Confirm Password"
-              secure
+              withSecure
             />
           </View>
           <View style={styles.buttonContainer}>
