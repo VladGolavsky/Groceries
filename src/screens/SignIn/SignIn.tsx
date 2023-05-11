@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 
 import Container from 'src/components/Container';
 import DismissKeyboard from 'src/components/DismissKeyboard';
@@ -30,7 +30,7 @@ const SignInScreen: React.FC<ISignInScreen> = ({
   return (
     <Container>
       <DismissKeyboard>
-        <View style={styles.container}>
+        <KeyboardAvoidingView behavior="position"  style={styles.container}>
           <TouchableOpacity onPress={goToSignUp} style={styles.buttonSignUp}>
             <Text style={styles.textSignUp}>{'SIGN UP >'}</Text>
           </TouchableOpacity>
@@ -58,7 +58,7 @@ const SignInScreen: React.FC<ISignInScreen> = ({
           <TouchableOpacity onPress={onUseWithoutAccount} style={styles.buttonUseWithoutAccount}>
             <Text style={styles.textUseWithoutAccount}>Use without account</Text>
           </TouchableOpacity>
-        </View>
+        </KeyboardAvoidingView>
       </DismissKeyboard>
     </Container>
   );

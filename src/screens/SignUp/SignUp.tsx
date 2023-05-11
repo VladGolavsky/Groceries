@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 
 import Container from 'src/components/Container';
 import DismissKeyboard from 'src/components/DismissKeyboard';
@@ -36,7 +36,7 @@ const SignUpScreen: React.FC<ISignUpScreen> = ({
   return (
     <Container>
       <DismissKeyboard>
-        <View style={styles.container}>
+        <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={Platform.OS === 'android' ? 30 : 50} style={styles.container}>
           <TouchableOpacity onPress={goBack} style={styles.buttonGoBack}>
             <Text style={styles.buttonBackText}>{'<'}</Text>
           </TouchableOpacity>
@@ -74,7 +74,7 @@ const SignUpScreen: React.FC<ISignUpScreen> = ({
               onPress={onSignUp}
             />
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </DismissKeyboard>
     </Container>
   );

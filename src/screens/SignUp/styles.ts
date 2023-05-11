@@ -8,7 +8,7 @@ export default StyleSheet.create({
     paddingHorizontal: moderateScale(15),
   },
   textLogo: {
-    marginTop: moderateVerticalScale(80),
+    paddingTop: moderateVerticalScale(80),
     textAlign: 'center',
     fontSize: moderateScale(45),
     textTransform: 'uppercase',
