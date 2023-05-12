@@ -1,17 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { getUniqueId } from 'react-native-device-info';
+import { useDispatch } from 'react-redux';
 
 import SignUpScreen from './SignUp';
 
 import { INavigation } from 'src/interfaces/navigation.interface';
+import { signUpAction } from 'src/redux/actions';
 
 const SignUp: React.FC<INavigation> = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  const [userName, setUserName] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const dispatch = useDispatch();
+
+  const [email, setEmail] = useState<string>('');
+  const [userName, setUserName] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [deviceId, setDeviceId] = useState<string>('');
+
+  useEffect(() => {
+    getUniqueId().then((uniqueId: string) => {
+      setDeviceId(uniqueId);
+    })
+  }, []);
 
   const onSignUp = () => {
-
+    dispatch(signUpAction({ email, userName, password, deviceId }));
   }
 
   const goBack = () => {

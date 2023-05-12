@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import { useDispatch } from 'react-redux';
+import { getUniqueId } from 'react-native-device-info';
+
 
 import SignInScreen from './SignIn';
 
@@ -10,15 +12,22 @@ import { signInAction } from 'src/redux/actions';
 const SignIn: React.FC<INavigation> = ({ navigation }) => {
   const dispatch = useDispatch();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [deviceId, setDeviceId] = useState<string>('')
 
   useEffect(() => {
     SplashScreen.hide();
   }, []);
 
+  useEffect(() => {
+    getUniqueId().then((uniqueId: string) => {
+      setDeviceId(uniqueId);
+    })
+  }, []);
+
   const onSignIn = () => {
-    dispatch(signInAction({ email, password }));
+    dispatch(signInAction({ email, password, deviceId }));
   }
 
   const onUseWithoutAccount = () => {

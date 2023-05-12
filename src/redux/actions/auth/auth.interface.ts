@@ -3,3 +3,10 @@ export interface ISignInAction {
   password: string;
   deviceId: string;
 };
+
+export interface ISignUpAction {
+  email: string;
+  userName: string;
+  deviceId: string;
+  password: string;
+};
