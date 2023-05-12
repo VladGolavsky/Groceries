@@ -9,15 +9,16 @@ import { moderateScale } from 'react-native-size-matters';
 type ITextInputComponent = {
   withSecure?: boolean;
   additionStyles?: ViewStyle;
+  error?: string;
 };
 
-const TextInput: React.FC<TextInputProps & ITextInputComponent> = ({ value, onChangeText, placeholder, withSecure = false, additionStyles = {}, keyboardType = 'default' }) => {
+const TextInput: React.FC<TextInputProps & ITextInputComponent> = ({ value, onChangeText, placeholder, withSecure = false, additionStyles = {}, keyboardType = 'default', error = '' }) => {
   const [secure, setSecure] = useState(withSecure);
 
   const onSecureButtonPress = () => setSecure(!secure)
 
   return (
-    <View style={[styles.container, additionStyles, styles.containerWithSecure]}>
+    <View style={[styles.container, additionStyles, styles.containerWithSecure, error.length ? styles.containerWithError : {}]}>
       <RNTextInput
         autoCapitalize='none'
         autoCorrect={false}
@@ -27,7 +28,7 @@ const TextInput: React.FC<TextInputProps & ITextInputComponent> = ({ value, onCh
         onChangeText={onChangeText}
         underlineColorAndroid={'transparent'}
         keyboardType={keyboardType}
-        style={[styles.textInput, withSecure && styles.textInputWithSecure]}
+        style={[styles.textInput, withSecure && styles.textInputWithSecure, error.length ? styles.textInputWithError : {}]}
       />
       {
         withSecure && (

@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { scale, verticalScale } from "react-native-size-matters";
-import { black } from "src/constants/colors";
+import { black, red } from "src/constants/colors";
 
 export default StyleSheet.create({
   container: {
@@ -10,10 +10,16 @@ export default StyleSheet.create({
     paddingVertical: verticalScale(5),
     paddingHorizontal: scale(5),
   },
+  containerWithError: {
+    borderBottomColor: red,
+  },
   textInput: {
     fontSize: scale(16),
     color: black,
     padding: 0,
+  },
+  textInputWithError: {
+    color: red,
   },
   textInputWithSecure: {
     width: '90%'

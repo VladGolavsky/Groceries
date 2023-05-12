@@ -10,6 +10,8 @@ import styles from './styles';
 import Button from 'src/components/Button';
 import { black } from 'src/constants/colors';
 import { moderateScale } from 'react-native-size-matters';
+import * as ERRORS from 'src/constants/errors';
+
 
 type ISignInScreen = {
   email: string;
@@ -19,6 +21,8 @@ type ISignInScreen = {
   onSignIn: () => void;
   onUseWithoutAccount: () => void;
   goToSignUp: () => void;
+  signInLoading: boolean;
+  signInError: string;
 }
 
 const SignInScreen: React.FC<ISignInScreen> = ({
@@ -29,7 +33,10 @@ const SignInScreen: React.FC<ISignInScreen> = ({
   onSignIn,
   onUseWithoutAccount,
   goToSignUp,
+  signInLoading,
+  signInError,
 }) => {
+
   return (
     <Container>
       <DismissKeyboard>
@@ -46,18 +53,30 @@ const SignInScreen: React.FC<ISignInScreen> = ({
               additionStyles={styles.textInputAdditionStyles}
               placeholder="Email"
               keyboardType="email-address"
+              error={signInError === ERRORS.FillPassword ? '' : signInError}
             />
             <TextInput
               value={password}
               onChangeText={setPassword}
               placeholder="Password"
               withSecure
+              error={signInError === ERRORS.FillEmail ? '' : signInError}
             />
           </View>
+          {
+            signInError?.length ? (
+              <View style={styles.textErrorContainer}>
+                <Text style={styles.textError}>{signInError}</Text>
+              </View>
+            ) : (
+              <View style={styles.textErrorContainer} />
+            )
+          }
           <View style={styles.buttonContainer}>
             <Button
               title="SIGN IN"
               onPress={onSignIn}
+              loading={signInLoading}
             />
           </View>
           <TouchableOpacity onPress={onUseWithoutAccount} style={styles.buttonUseWithoutAccount}>

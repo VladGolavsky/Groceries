@@ -27,5 +27,7 @@ sagaMiddleware.run(rootSaga);
 
 const persistor = persistStore(store);
 
+export type IRootState = ReturnType<typeof reducer>;
+
 export { persistor };
 export default store;

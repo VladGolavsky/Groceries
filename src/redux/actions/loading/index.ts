@@ -1,4 +1,4 @@
 import { createAction } from "redux-act";
-import { LoadingEnum } from "./loading.interface";
+import { ISetLoadingAction } from "./loading.interface";
 
-export const setLoadingAction = createAction<{ [P in keyof LoadingEnum]: boolean }>('SET_LOADING_ACTION');
+export const setLoadingAction = createAction<ISetLoadingAction>('SET_LOADING_ACTION');

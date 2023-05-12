@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { moderateScale, moderateVerticalScale, scale, verticalScale } from "react-native-size-matters";
 
-import { black } from "src/constants/colors";
+import { black, red } from "src/constants/colors";
 
 export default StyleSheet.create({
   container: {
@@ -18,7 +18,7 @@ export default StyleSheet.create({
     marginTop: verticalScale(30),
   },
   buttonContainer: {
-    marginTop: verticalScale(30),
+    marginTop: verticalScale(20),
   },
   textInputAdditionStyles: {
     marginBottom: verticalScale(20)
@@ -51,4 +51,14 @@ export default StyleSheet.create({
     fontSize: moderateScale(15),
     fontWeight: '700',
   },
+  textErrorContainer: {
+    marginTop: scale(5),
+    height: moderateScale(14),
+    alignSelf: 'flex-end',
+  },
+  textError: {
+    color: red,
+    fontSize: moderateScale(10),
+    fontWeight: '500',
+  }
 });

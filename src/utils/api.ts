@@ -1,9 +1,7 @@
 import * as effects from 'redux-saga/effects';
 
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import api, { setAuthHeader } from './apiConfig';
-// import * as endpoints from 'src/constants/endpoints';
-
 
 export function* get(endpoint: string, options?: AxiosRequestConfig | null) {
   try {
@@ -25,8 +23,9 @@ export function* del(endpoint: string, options?: AxiosRequestConfig | null) {
 export function* post(endpoint: string, data: any, options?: AxiosRequestConfig | null) {
   try {
     return (yield effects.call(api.post, endpoint, data, options || {})) as AxiosResponse;
-  } catch (error) {
-    
+  } catch (error: any) {
+    if (!error?.response) throw error;
+    if (error.response) throw error.response?.data;
   }
 }
 

@@ -1,15 +1,17 @@
 import { createReducer } from 'redux-act';
 import * as actions from 'src/redux/actions';
+import { ILoadingReducer, ISetLoadingAction, LoadingEnum } from 'src/redux/actions/loading/loading.interface';
 
-const initialState = {
-  
+const initialState: ILoadingReducer = {
+  signIn: false,
+  signUp: false,
 };
 
-const authReducer = createReducer({
-  [actions.setLoadingAction]: (state, { type, value }) => ({
+const loadingReducer = createReducer<ILoadingReducer>({
+  [actions.setLoadingAction]: (state: ILoadingReducer, payload: ISetLoadingAction) => ({
     ...state,
-    [type]: value 
+    ...payload,
   }),
 }, initialState);
 
-export default authReducer;
+export default loadingReducer;

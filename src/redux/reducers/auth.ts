@@ -6,13 +6,13 @@ interface IAuthReducer {
   refreshToken: string | null;
 }
 
-const initialState = {
+const initialState: IAuthReducer = {
   accessToken: null,
   refreshToken: null,
 };
 
 const authReducer = createReducer<IAuthReducer>({
-  [actions.setTokensAction]: (state, payload) => ({
+  [actions.setTokensAction]: (state: IAuthReducer, payload) => ({
     ...payload,
   }),
 }, initialState);
