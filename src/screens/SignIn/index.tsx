@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import SplashScreen from 'react-native-splash-screen';
+import { useDispatch } from 'react-redux';
 
 import SignInScreen from './SignIn';
 
 import { INavigation } from 'src/interfaces/navigation.interface';
+import { signInAction } from 'src/redux/actions';
 
 const SignIn: React.FC<INavigation> = ({ navigation }) => {
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -14,7 +18,7 @@ const SignIn: React.FC<INavigation> = ({ navigation }) => {
   }, []);
 
   const onSignIn = () => {
-
+    dispatch(signInAction({ email, password }));
   }
 
   const onUseWithoutAccount = () => {

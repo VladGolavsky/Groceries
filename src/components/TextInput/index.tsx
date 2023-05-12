@@ -11,7 +11,7 @@ type ITextInputComponent = {
   additionStyles?: ViewStyle;
 };
 
-const TextInput: React.FC<TextInputProps & ITextInputComponent> = ({ value, onChangeText, placeholder, withSecure = false, additionStyles = {} }) => {
+const TextInput: React.FC<TextInputProps & ITextInputComponent> = ({ value, onChangeText, placeholder, withSecure = false, additionStyles = {}, keyboardType = 'default' }) => {
   const [secure, setSecure] = useState(withSecure);
 
   const onSecureButtonPress = () => setSecure(!secure)
@@ -26,6 +26,7 @@ const TextInput: React.FC<TextInputProps & ITextInputComponent> = ({ value, onCh
         secureTextEntry={secure}
         onChangeText={onChangeText}
         underlineColorAndroid={'transparent'}
+        keyboardType={keyboardType}
         style={[styles.textInput, withSecure && styles.textInputWithSecure]}
       />
       {

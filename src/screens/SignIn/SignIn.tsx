@@ -45,6 +45,7 @@ const SignInScreen: React.FC<ISignInScreen> = ({
               onChangeText={setEmail}
               additionStyles={styles.textInputAdditionStyles}
               placeholder="Email"
+              keyboardType="email-address"
             />
             <TextInput
               value={password}

@@ -49,6 +49,7 @@ const SignUpScreen: React.FC<ISignUpScreen> = ({
               value={email}
               onChangeText={setEmail}
               additionStyles={styles.textInputAdditionStyles}
+              keyboardType="email-address"
               placeholder="Email"
             />
             <TextInput
