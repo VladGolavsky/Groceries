@@ -1,5 +1,5 @@
 import React, { ForwardedRef, useState } from 'react';
-import { TextInput as RNTextInput, TextInputProps, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { TextInput as RNTextInput, TextInputProps, TouchableOpacity, View, ViewStyle, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import styles from './styles';
@@ -22,6 +22,7 @@ const TextInput = ({
   error = '',
   onSubmitEditing = () => {},
   returnKeyType = 'default',
+  maxLength,
 } : TextInputProps & ITextInputComponent, ref: ForwardedRef<RNTextInput>) => {
   const [secure, setSecure] = useState(withSecure);
 
@@ -43,6 +44,7 @@ const TextInput = ({
           style={[styles.textInput, withSecure && styles.textInputWithSecure, error.length ? styles.textInputWithError : {}]}
           onSubmitEditing={onSubmitEditing}
           returnKeyType={returnKeyType}
+          maxLength={maxLength}
         />
         {
           withSecure && (
@@ -52,6 +54,13 @@ const TextInput = ({
           )
         }
       </View>
+      {
+        maxLength ? (
+          <View>
+            <Text style={styles.textCharactersLeft}>{`Characters left ${maxLength - (value?.length || 0)}`}</Text>
+          </View>
+        ) : <View />
+      }
     </>
   );
 }

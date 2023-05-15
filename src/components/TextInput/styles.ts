@@ -17,6 +17,7 @@ export default StyleSheet.create({
     fontSize: scale(16),
     color: black,
     padding: 0,
+    width: '100%',
   },
   textInputWithError: {
     color: red,
@@ -31,5 +32,13 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-end',
     width: '10%',
+  },
+  textCharactersLeft: {
+    textAlign: 'right',
+    marginTop: scale(2),
+    fontSize: scale(19),
+    fontWeight: '500',
+    letterSpacing: -0.5,
+    color: black,
   },
 });

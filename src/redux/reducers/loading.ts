@@ -5,6 +5,7 @@ import { ILoadingReducer, ISetLoadingAction, LoadingEnum } from 'src/redux/actio
 const initialState: ILoadingReducer = {
   signIn: false,
   signUp: false,
+  addToList: false,
 };
 
 const loadingReducer = createReducer<ILoadingReducer>({

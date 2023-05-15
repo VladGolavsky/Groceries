@@ -1,0 +1,1 @@
+export type IAddToListAction = { title: string };

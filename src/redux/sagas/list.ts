@@ -7,9 +7,10 @@ import {
 import * as actions from 'src/redux/actions';
 
 import { setLoadingAction } from '../actions/loading';
-import { get } from 'src/utils/api';
+import { get, post } from 'src/utils/api';
 import * as endpoints from 'src/constants/endpoints';
 import { navigationRef } from 'src/navigation';
+import { IAddToListAction } from '../actions/list/list.interface';
 
 function* getListSaga(): Generator {
   try {
@@ -26,8 +27,27 @@ function* getListSaga(): Generator {
   }
 };
 
+function* addToListSaga({ payload } : { payload: IAddToListAction }): Generator {
+  try {
+    yield put(setLoadingAction({ addToList: true }));
+
+    const { data } = (yield call(post, endpoints.addToList(), { title: payload.title }));
+    console.log('data', data)
+    if (data) {
+      navigationRef?.goBack();
+
+      yield put(setLoadingAction({ addToList: false }));
+    }
+  } catch (e: any) {
+    console.log('e', e)
+    yield put(setLoadingAction({ addToList: false }));
+  } finally {
+  }
+};
+
 export default function* listSaga() {
   yield all([
     takeLatest(actions.getListAction, getListSaga),
+    takeLatest(actions.addToListAction, addToListSaga)
   ]);
 };

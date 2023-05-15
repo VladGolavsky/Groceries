@@ -1,5 +1,5 @@
 export enum LoadingEnum { 
-  'signIn' = 'signIn', 'signUp' = 'signUp' };
+  'signIn' = 'signIn', 'signUp' = 'signUp', 'addToList' = 'addToList' };
 
 export type ILoadingReducer = Record<LoadingEnum, boolean>;
 
