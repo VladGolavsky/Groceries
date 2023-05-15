@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import React, { createRef } from 'react';
+import { View, Text, TouchableOpacity, KeyboardAvoidingView, Platform, TextInput as RNTextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 
 import Container from 'src/components/Container';
@@ -10,6 +10,7 @@ import styles from './styles';
 import Button from 'src/components/Button';
 import { black } from 'src/constants/colors';
 import { moderateScale } from 'react-native-size-matters';
+import * as ERRORS from 'src/constants/errors';
 
 type ISignUpScreen = {
   email: string;
@@ -22,6 +23,8 @@ type ISignUpScreen = {
   setConfirmPassword: (text: string) => void;
   onSignUp: () => void;
   goBack: () => void;
+  signUpError: string;
+  signUpLoading: boolean;
 };
 
 const SignUpScreen: React.FC<ISignUpScreen> = ({
@@ -35,7 +38,17 @@ const SignUpScreen: React.FC<ISignUpScreen> = ({
   setConfirmPassword,
   onSignUp,
   goBack,
+  signUpError,
+  signUpLoading,
 }) => {
+  const userNameField = createRef<RNTextInput>();
+  const passwordField = createRef<RNTextInput>();
+  const confirmPasswordField = createRef<RNTextInput>();
+
+  const focusUserName = () => userNameField.current?.focus();
+  const focusPassword = () => passwordField.current?.focus();
+  const focusConfirmPassword = () => confirmPasswordField.current?.focus();
+
   return (
     <Container>
       <DismissKeyboard>
@@ -51,31 +64,56 @@ const SignUpScreen: React.FC<ISignUpScreen> = ({
               additionStyles={styles.textInputAdditionStyles}
               keyboardType="email-address"
               placeholder="Email"
+              error={signUpError === ERRORS.PasswordsNotSame || signUpError === ERRORS.WeakPassword ? '' : signUpError}
+              returnKeyType="next"
+              onSubmitEditing={focusUserName}
             />
             <TextInput
+              ref={userNameField}
               value={userName}
               onChangeText={setUserName}
               additionStyles={styles.textInputAdditionStyles}
               placeholder="Username"
+              error={signUpError === ERRORS.PasswordsNotSame || signUpError === ERRORS.WeakPassword ? '' : signUpError}
+              returnKeyType="next"
+              onSubmitEditing={focusPassword}
             />
             <TextInput
+              ref={passwordField}
               value={password}
               onChangeText={setPassword}
               additionStyles={styles.textInputAdditionStyles}
               placeholder="Password"
+              error={signUpError}
               withSecure
+              returnKeyType="next"
+              onSubmitEditing={focusConfirmPassword}
             />
             <TextInput
+              ref={confirmPasswordField}
               value={confirmPassword}
               onChangeText={setConfirmPassword}
               placeholder="Confirm Password"
+              error={signUpError}
               withSecure
+              returnKeyType="done"
+              onSubmitEditing={onSignUp}
             />
           </View>
+          {
+            signUpError?.length ? (
+              <View style={styles.textErrorContainer}>
+                <Text style={styles.textError}>{signUpError}</Text>
+              </View>
+            ) : (
+              <View style={styles.textErrorContainer} />
+            )
+          }
           <View style={styles.buttonContainer}>
             <Button
               title="SIGN UP"
               onPress={onSignUp}
+              loading={signUpLoading}
             />
           </View>
         </KeyboardAvoidingView>

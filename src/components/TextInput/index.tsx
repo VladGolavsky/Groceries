@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { ForwardedRef, useState } from 'react';
 import { TextInput as RNTextInput, TextInputProps, TouchableOpacity, View, ViewStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import styles from './styles';
-import { black } from 'src/constants/colors';
+import { black, red } from 'src/constants/colors';
 import { moderateScale } from 'react-native-size-matters';
 
 type ITextInputComponent = {
@@ -12,7 +12,17 @@ type ITextInputComponent = {
   error?: string;
 };
 
-const TextInput: React.FC<TextInputProps & ITextInputComponent> = ({ value, onChangeText, placeholder, withSecure = false, additionStyles = {}, keyboardType = 'default', error = '' }) => {
+const TextInput = ({
+  value,
+  onChangeText,
+  placeholder,
+  withSecure = false,
+  additionStyles = {},
+  keyboardType = 'default',
+  error = '',
+  onSubmitEditing = () => {},
+  returnKeyType = 'default',
+} : TextInputProps & ITextInputComponent, ref: ForwardedRef<RNTextInput>) => {
   const [secure, setSecure] = useState(withSecure);
 
   const onSecureButtonPress = () => setSecure(!secure)
@@ -20,6 +30,7 @@ const TextInput: React.FC<TextInputProps & ITextInputComponent> = ({ value, onCh
   return (
     <View style={[styles.container, additionStyles, styles.containerWithSecure, error.length ? styles.containerWithError : {}]}>
       <RNTextInput
+        ref={ref}
         autoCapitalize='none'
         autoCorrect={false}
         placeholder={placeholder}
@@ -29,11 +40,13 @@ const TextInput: React.FC<TextInputProps & ITextInputComponent> = ({ value, onCh
         underlineColorAndroid={'transparent'}
         keyboardType={keyboardType}
         style={[styles.textInput, withSecure && styles.textInputWithSecure, error.length ? styles.textInputWithError : {}]}
+        onSubmitEditing={onSubmitEditing}
+        returnKeyType={returnKeyType}
       />
       {
         withSecure && (
           <TouchableOpacity onPress={onSecureButtonPress} style={styles.secureButton} hitSlop={10}>
-            <Icon name={!secure ? "eye" : "eye-slash"} size={moderateScale(20)} color={black} />
+            <Icon name={!secure ? "eye" : "eye-slash"} size={moderateScale(20)} color={error.length ? red : black} />
           </TouchableOpacity>
         )
       }
@@ -41,4 +54,4 @@ const TextInput: React.FC<TextInputProps & ITextInputComponent> = ({ value, onCh
   );
 }
 
-export default TextInput;
+export default React.forwardRef(TextInput);

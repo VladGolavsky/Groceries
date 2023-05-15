@@ -1,5 +1,6 @@
 import { createReducer } from 'redux-act';
 import * as actions from 'src/redux/actions';
+import { ISetTokenAction } from '../actions/auth/auth.interface';
 
 interface IAuthReducer {
   accessToken: string | null;
@@ -12,7 +13,7 @@ const initialState: IAuthReducer = {
 };
 
 const authReducer = createReducer<IAuthReducer>({
-  [actions.setTokensAction]: (state: IAuthReducer, payload) => ({
+  [actions.setTokensAction]: (state: IAuthReducer, payload: ISetTokenAction) => ({
     ...payload,
   }),
 }, initialState);

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import { useDispatch,useSelector } from 'react-redux';
 import { getUniqueId } from 'react-native-device-info';
+import { Keyboard } from 'react-native';
 
 import SignInScreen from './SignIn';
 
@@ -10,8 +11,6 @@ import { signInAction } from 'src/redux/actions';
 import { errorsSelector, loadingSelector } from 'src/redux/selectors';
 import { setErrorAction } from 'src/redux/actions/errors';
 import * as ERRORS from 'src/constants/errors';
-
-const passwordRegEx = /^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/;
 
 const SignIn: React.FC<INavigation> = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -34,26 +33,14 @@ const SignIn: React.FC<INavigation> = ({ navigation }) => {
   }, []);
 
   const onSignIn = () => {
-    if (!email.length && !password.length) {
+    if (!email.length || !password.length) {
       dispatch(setErrorAction({ signIn: ERRORS.FillAllFields }));
       return;
     }
-    if (!email.length) {
-      dispatch(setErrorAction({ signIn: ERRORS.FillEmail }));
-      return;
-    }
 
-    if (!password.length) {
-      dispatch(setErrorAction({ signIn: ERRORS.FillPassword }));        
-      return;
-    }
-
+    Keyboard.dismiss();
     dispatch(setErrorAction({ signIn: '' }));        
     dispatch(signInAction({ email, password, deviceId }));
-    // if (passwordRegEx.test(password)) {
-    // } else {
-      
-    // }
   }
 
   const onUseWithoutAccount = () => {

@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
-import { moderateScale, moderateVerticalScale, verticalScale } from "react-native-size-matters";
+import { moderateScale, moderateVerticalScale, scale, verticalScale } from "react-native-size-matters";
 
-import { black } from "src/constants/colors";
+import { black, red } from "src/constants/colors";
 
 export default StyleSheet.create({
   container: {
@@ -30,4 +30,14 @@ export default StyleSheet.create({
     color: black,
     fontWeight: '600',
   },
+  textErrorContainer: {
+    marginTop: scale(5),
+    height: moderateScale(14),
+    alignSelf: 'flex-end',
+  },
+  textError: {
+    color: red,
+    fontSize: moderateScale(10),
+    fontWeight: '500',
+  }
 });

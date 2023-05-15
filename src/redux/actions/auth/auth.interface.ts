@@ -10,3 +10,8 @@ export interface ISignUpAction {
   deviceId: string;
   password: string;
 };
+
+export interface ISetTokenAction {
+  accessToken: string;
+  refreshToken: string;
+};

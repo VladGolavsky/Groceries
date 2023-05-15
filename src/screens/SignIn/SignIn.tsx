@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import React, { createRef } from 'react';
+import { View, Text, TouchableOpacity, KeyboardAvoidingView, TextInput as RNTextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 
 import Container from 'src/components/Container';
@@ -10,7 +10,6 @@ import styles from './styles';
 import Button from 'src/components/Button';
 import { black } from 'src/constants/colors';
 import { moderateScale } from 'react-native-size-matters';
-import * as ERRORS from 'src/constants/errors';
 
 
 type ISignInScreen = {
@@ -36,6 +35,9 @@ const SignInScreen: React.FC<ISignInScreen> = ({
   signInLoading,
   signInError,
 }) => {
+  const passwordRef = createRef<RNTextInput>();
+
+  const focusPasswordField = () => passwordRef.current?.focus();
 
   return (
     <Container>
@@ -53,14 +55,19 @@ const SignInScreen: React.FC<ISignInScreen> = ({
               additionStyles={styles.textInputAdditionStyles}
               placeholder="Email"
               keyboardType="email-address"
-              error={signInError === ERRORS.FillPassword ? '' : signInError}
+              error={signInError}
+              onSubmitEditing={focusPasswordField}
+              returnKeyType="next"
             />
             <TextInput
+              ref={passwordRef}
               value={password}
               onChangeText={setPassword}
               placeholder="Password"
               withSecure
-              error={signInError === ERRORS.FillEmail ? '' : signInError}
+              error={signInError}
+              onSubmitEditing={onSignIn}
+              returnKeyType="done"
             />
           </View>
           {
