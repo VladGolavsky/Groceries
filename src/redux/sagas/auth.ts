@@ -32,7 +32,7 @@ function* signInSaga({ payload } : { payload: ISignInAction }): Generator {
       yield put(actions.setTokensAction({ accessToken, refreshToken }));
       yield put(actions.setUserAction(user));
 
-      navigationRef.current?.dispatch(StackActions.replace('SignIn'));
+      navigationRef.current?.dispatch(StackActions.replace('Home'));
 
       yield put(setLoadingAction({ signIn: false }));
     }
@@ -64,7 +64,7 @@ function* signUpSaga({ payload } : { payload: ISignUpAction }): Generator {
       yield put(actions.setTokensAction({ accessToken, refreshToken }));
       yield put(actions.setUserAction(user));
 
-      navigationRef.current?.dispatch(StackActions.replace('SignIn'));
+      navigationRef.current?.dispatch(StackActions.replace('Home'));
 
       yield put(setLoadingAction({ signUp: false }));
 
@@ -81,7 +81,7 @@ function* signUpSaga({ payload } : { payload: ISignUpAction }): Generator {
   }
 };
 
-export default function* activitiesSagas() {
+export default function* authSaga() {
   yield all([
     takeLatest(actions.signInAction, signInSaga),
     takeLatest(actions.signUpAction, signUpSaga),

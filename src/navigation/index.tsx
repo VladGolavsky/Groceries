@@ -16,6 +16,7 @@ import ListIcon from 'src/assets/list.png';
 import ListIconFilled from 'src/assets/list_filled.png';
 import CartIcon from 'src/assets/cart_tab.png';
 import CartIconFilled from 'src/assets/cart_tab_filled.png';
+import AddToList from 'src/screens/AddToList';
 
 import { lightGray } from 'src/constants/colors';
 import styles from './styles';
@@ -60,6 +61,7 @@ export default () => {
         <MainStack.Screen name="SignIn" component={SignIn} options={optionsWithoutHeader} />
         <MainStack.Screen name="SignUp" component={SignUp} options={optionsWithoutHeader} />
         <MainStack.Screen name="Home" component={Home} options={optionsWithoutHeader} />
+        <MainStack.Screen name="AddToList" component={AddToList} options={{...optionsWithoutHeader, gestureDirection: 'vertical'}} />
       </MainStack.Navigator>
     </NavigationContainer>
   );

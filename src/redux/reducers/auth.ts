@@ -14,6 +14,7 @@ const initialState: IAuthReducer = {
 
 const authReducer = createReducer<IAuthReducer>({
   [actions.setTokensAction]: (state: IAuthReducer, payload: ISetTokenAction) => ({
+    ...state,
     ...payload,
   }),
 }, initialState);

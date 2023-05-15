@@ -12,17 +12,21 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#BCBCBC'
   },
   leftPart: {
     width: width * 0.25,
   },
   rightPart: {
     width: width * 0.25,
+    alignItems: 'flex-end',
   },
   textTitle: {
     textAlign: 'center',
     fontWeight: '500',
     color: black,
-    fontSize: scale(16),
+    fontSize: scale(20),
+    letterSpacing: -0.5,
   },
 });

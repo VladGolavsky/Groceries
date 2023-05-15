@@ -28,29 +28,31 @@ const TextInput = ({
   const onSecureButtonPress = () => setSecure(!secure)
 
   return (
-    <View style={[styles.container, additionStyles, styles.containerWithSecure, error.length ? styles.containerWithError : {}]}>
-      <RNTextInput
-        ref={ref}
-        autoCapitalize='none'
-        autoCorrect={false}
-        placeholder={placeholder}
-        value={value}
-        secureTextEntry={secure}
-        onChangeText={onChangeText}
-        underlineColorAndroid={'transparent'}
-        keyboardType={keyboardType}
-        style={[styles.textInput, withSecure && styles.textInputWithSecure, error.length ? styles.textInputWithError : {}]}
-        onSubmitEditing={onSubmitEditing}
-        returnKeyType={returnKeyType}
-      />
-      {
-        withSecure && (
-          <TouchableOpacity onPress={onSecureButtonPress} style={styles.secureButton} hitSlop={10}>
-            <Icon name={!secure ? "eye" : "eye-slash"} size={moderateScale(20)} color={error.length ? red : black} />
-          </TouchableOpacity>
-        )
-      }
-    </View>
+    <>
+      <View style={[styles.container, additionStyles, styles.containerWithSecure, error.length ? styles.containerWithError : {}]}>
+        <RNTextInput
+          ref={ref}
+          autoCapitalize='none'
+          autoCorrect={false}
+          placeholder={placeholder}
+          value={value}
+          secureTextEntry={secure}
+          onChangeText={onChangeText}
+          underlineColorAndroid={'transparent'}
+          keyboardType={keyboardType}
+          style={[styles.textInput, withSecure && styles.textInputWithSecure, error.length ? styles.textInputWithError : {}]}
+          onSubmitEditing={onSubmitEditing}
+          returnKeyType={returnKeyType}
+        />
+        {
+          withSecure && (
+            <TouchableOpacity onPress={onSecureButtonPress} style={styles.secureButton} hitSlop={10}>
+              <Icon name={!secure ? "eye" : "eye-slash"} size={moderateScale(20)} color={error.length ? red : black} />
+            </TouchableOpacity>
+          )
+        }
+      </View>
+    </>
   );
 }
 

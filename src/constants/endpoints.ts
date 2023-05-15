@@ -1,2 +1,5 @@
 export const signIn = () => '/auth/signin';
 export const signUp = () => '/auth/signup';
+export const refresh = () => '/auth/refresh';
+
+export const getList = () => '/list';
