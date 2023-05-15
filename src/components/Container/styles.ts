@@ -1,10 +1,10 @@
 import { StyleSheet } from "react-native";
 
-import { white } from "src/constants/colors";
+import { lightGray } from "src/constants/colors";
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: white,
+    backgroundColor: lightGray,
     flex: 1,
   },
 });

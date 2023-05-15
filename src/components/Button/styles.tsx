@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { moderateScale } from "react-native-size-matters";
 
-import { black, white } from "src/constants/colors";
+import { black, lightGray } from "src/constants/colors";
 
 export default StyleSheet.create({
   container: {
@@ -13,7 +13,7 @@ export default StyleSheet.create({
   },
   title: {
     fontSize: moderateScale(20),
-    color: white,
+    color: lightGray,
     fontWeight: '600',
   },
 });

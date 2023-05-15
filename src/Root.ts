@@ -8,7 +8,7 @@ import { accessTokenSelector } from './redux/selectors/auth';
 const Root: React.FC<INavigation> = ({ navigation }) => {
   const accessToken = useSelector(accessTokenSelector);
   useEffect(() => {
-    accessToken ? navigation.replace('SignUp') : navigation.replace('SignIn');
+    accessToken ? navigation.replace('Home') : navigation.replace('SignIn');
   }, []);
 
   return null;

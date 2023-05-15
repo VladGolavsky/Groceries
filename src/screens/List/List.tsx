@@ -2,10 +2,15 @@ import React from "react";
 import { View } from "react-native";
 
 import styles from "./styles";
+import Container from "src/components/Container";
+import Header from "src/components/Header";
 
 const ListScreen = () => {
   return (
-    <View style={styles.container} />
+    <Container edges={[ 'top' ]}>
+      <Header title={"Groceries"} />
+      <View style={styles.container} />
+    </Container>
   );
 };
 

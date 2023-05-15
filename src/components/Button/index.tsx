@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Text, ActivityIndicator } from 'react-native';
 
 import styles from './styles';
-import { white } from 'src/constants/colors';
+import { lightGray } from 'src/constants/colors';
 
 type IButton = {
   title: string;
@@ -15,7 +15,7 @@ const Button: React.FC<IButton> = ({ title, onPress, loading = false }) => {
     <TouchableOpacity onPress={onPress} style={styles.container} disabled={loading}>
       {
         loading ? (
-          <ActivityIndicator color={white} />
+          <ActivityIndicator color={lightGray} />
         ) : (
           <Text style={styles.title}>{title}</Text>
         )
