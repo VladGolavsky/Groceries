@@ -6,7 +6,7 @@ import { black, gray, white } from "src/constants/colors";
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: gray,
+    backgroundColor: white,
   },
   buttonEditMode: {
     paddingHorizontal: scale(10),

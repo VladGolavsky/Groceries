@@ -6,6 +6,7 @@ const initialState: ILoadingReducer = {
   signIn: false,
   signUp: false,
   addToList: false,
+  fullApp: false,
 };
 
 const loadingReducer = createReducer<ILoadingReducer>({

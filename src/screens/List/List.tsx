@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity, Text, FlatList } from "react-native";
+import { TouchableOpacity, Text, FlatList, View } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { scale } from "react-native-size-matters";
 
@@ -15,9 +15,10 @@ interface IListScreen {
   isEditMode: boolean;
   goToAddToList: () => void;
   list: Array<IProduct>;
+  onDelete: (_id: string) => void;
 }
 
-const ListScreen = ({ turnEditMode, isEditMode, goToAddToList, list } : IListScreen) => {
+const ListScreen = ({ turnEditMode, isEditMode, goToAddToList, list, onDelete } : IListScreen) => {
   const renderRight = () => (
     <TouchableOpacity onPress={turnEditMode} style={styles.buttonEditMode} hitSlop={scale(10)}>
       {
@@ -38,23 +39,22 @@ const ListScreen = ({ turnEditMode, isEditMode, goToAddToList, list } : IListScr
     return null;
   }
 
-  const renderItem = ({ item }: { item: IProduct}) => {
-    return (
-      <SwipeableRow item={item} isEditMode={isEditMode} />
-    );
-  }
+  const renderItem = ({ item }: { item: IProduct}) =>
+    <SwipeableRow item={item} isEditMode={isEditMode} onDelete={onDelete} />
 
   return (
-    <Container edges={[ 'top' ]}>
-      <Header title={"Groceries"} renderRight={renderRight} renderLeft={renderLeft}/>
-      <GestureHandlerRootView style={styles.container}>
-        <FlatList
-          data={list}
-          renderItem={renderItem}
-          keyExtractor={item => item._id}
-        />
-      </GestureHandlerRootView>
-    </Container>
+    <>
+      <Container edges={[ 'top' ]}>
+        <Header title={"Groceries"} renderRight={renderRight} renderLeft={renderLeft}/>
+        <GestureHandlerRootView style={styles.container}>
+          <FlatList
+            data={list}
+            renderItem={renderItem}
+            keyExtractor={item => item._id}
+          />
+        </GestureHandlerRootView>
+      </Container>
+    </>
   );
 };
 

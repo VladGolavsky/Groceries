@@ -7,10 +7,10 @@ import {
 import * as actions from 'src/redux/actions';
 
 import { setLoadingAction } from '../actions/loading';
-import { get, post } from 'src/utils/api';
+import { del, get, post } from 'src/utils/api';
 import * as endpoints from 'src/constants/endpoints';
 import { navigationRef } from 'src/navigation';
-import { IAddToListAction } from '../actions/list/list.interface';
+import { IAddToListAction, IRemoveFromListAction } from '../actions/list/list.interface';
 import { IProduct } from 'src/interfaces/list.interface';
 
 function* getListSaga(): Generator {
@@ -46,9 +46,29 @@ function* addToListSaga({ payload } : { payload: IAddToListAction }): Generator 
   }
 };
 
+function* removeFromListSaga({ payload } : { payload: IRemoveFromListAction }): Generator {
+  try {
+    yield put(setLoadingAction({ fullApp: true }));
+
+    const { data } = (yield call(del, endpoints.removeFromList(), { _id: payload._id })) as { data: IProduct };
+
+    if (data) {
+      console.log('removeFromListReduxAction', data)
+      // yield put(actions.addToListReduxAction(data));
+
+      yield put(setLoadingAction({ fullApp: false }));
+    }
+  } catch (e: any) {
+    console.log('e', e)
+      yield put(setLoadingAction({ fullApp: false }));
+  } finally {
+  }
+};
+
 export default function* listSaga() {
   yield all([
     takeLatest(actions.getListAction, getListSaga),
-    takeLatest(actions.addToListAction, addToListSaga)
+    takeLatest(actions.addToListAction, addToListSaga),
+    takeLatest(actions.removeFromListAction, removeFromListSaga),
   ]);
 };

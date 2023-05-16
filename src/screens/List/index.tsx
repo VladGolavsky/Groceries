@@ -24,9 +24,13 @@ const List = ({ navigation } : INavigation) => {
   }, []);
 
   const turnEditMode = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setEditMode(!isEditMode)
-    // LayoutAnimation.
   };
+
+  const onDelete = (_id: string) => {
+    dispatch(actions.removeFromListAction({ _id }))
+  }
 
   const goToAddToList = () => navigation.navigate('AddToList');
 
@@ -36,6 +40,7 @@ const List = ({ navigation } : INavigation) => {
       isEditMode={isEditMode}
       goToAddToList={goToAddToList}
       list={list}
+      onDelete={onDelete}
     />
   );
 };

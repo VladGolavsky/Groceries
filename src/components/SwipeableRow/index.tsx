@@ -20,9 +20,10 @@ const { width } = Dimensions.get('window');
 interface ISwipeableRow {
   item: IProduct;
   isEditMode: boolean;
+  onDelete: (_id: string) => void;
 };
 
-const SwipeableRow = ({ item, isEditMode }: ISwipeableRow) => {
+const SwipeableRow = ({ item, isEditMode, onDelete }: ISwipeableRow) => {
   const ref = useRef(null);
   const [isLoading, _isLoading] = useState(false);
 
@@ -82,7 +83,7 @@ const SwipeableRow = ({ item, isEditMode }: ISwipeableRow) => {
   if (isEditMode) {
     return (
       <View style={styles.contentEditMode}>
-        <TouchableOpacity style={styles.buttonRemove}>
+        <TouchableOpacity onPress={() => onDelete(item._id)} style={styles.buttonRemove}>
           <Icon name="remove-circle" size={scale(25)} color={red} />
         </TouchableOpacity>
         <Text style={styles.textTitle}>
