@@ -7,7 +7,7 @@ import {
 import * as actions from 'src/redux/actions';
 
 import { setLoadingAction } from '../actions/loading';
-import { del, get, post } from 'src/utils/api';
+import { del, get, patch, post } from 'src/utils/api';
 import * as endpoints from 'src/constants/endpoints';
 import { navigationRef } from 'src/navigation';
 import { IAddToListAction, IRemoveFromListAction } from '../actions/list/list.interface';
@@ -48,7 +48,7 @@ function* addToListSaga({ payload } : { payload: IAddToListAction }): Generator 
 
 function* removeFromListSaga({ payload } : { payload: IRemoveFromListAction }): Generator {
   try {
-    yield put(setLoadingAction({ fullApp: true }));
+    yield put(setLoadingAction({ globalApp: true }));
 
     const { data } = (yield call(del, endpoints.removeFromList(), { _id: payload._id })) as { data: IProduct };
 
@@ -56,11 +56,30 @@ function* removeFromListSaga({ payload } : { payload: IRemoveFromListAction }): 
       console.log('removeFromListReduxAction', data)
       // yield put(actions.addToListReduxAction(data));
 
-      yield put(setLoadingAction({ fullApp: false }));
+      yield put(setLoadingAction({ globalApp: false }));
     }
   } catch (e: any) {
     console.log('e', e)
-      yield put(setLoadingAction({ fullApp: false }));
+      yield put(setLoadingAction({ globalApp: false }));
+  } finally {
+  }
+};
+
+function* updateProductStatusSaga({ payload } : { payload: IRemoveFromListAction }): Generator {
+  try {
+    yield put(setLoadingAction({ globalApp: true }));
+
+    const { data } = (yield call(patch, endpoints.updateProductStatus(), { ...payload })) as { data: IProduct };
+
+    if (data) {
+      console.log('update status', data)
+      // yield put(actions.addToListReduxAction(data));
+
+      yield put(setLoadingAction({ globalApp: false }));
+    }
+  } catch (e: any) {
+    console.log('e', e)
+      yield put(setLoadingAction({ globalApp: false }));
   } finally {
   }
 };
@@ -70,5 +89,6 @@ export default function* listSaga() {
     takeLatest(actions.getListAction, getListSaga),
     takeLatest(actions.addToListAction, addToListSaga),
     takeLatest(actions.removeFromListAction, removeFromListSaga),
+    takeLatest(actions.updateProductStatusAction, updateProductStatusSaga)
   ]);
 };

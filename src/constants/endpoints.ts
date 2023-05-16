@@ -5,3 +5,4 @@ export const refresh = () => '/auth/refresh';
 export const getList = () => '/list';
 export const addToList = () => '/list/add';
 export const removeFromList = () => '/list/delete';
+export const updateProductStatus = () => '/list/status';
