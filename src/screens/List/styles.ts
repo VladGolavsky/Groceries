@@ -1,12 +1,12 @@
 import { StyleSheet } from "react-native";
 import { scale } from "react-native-size-matters";
 
-import { black, gray, white } from "src/constants/colors";
+import { black, white } from "src/constants/colors";
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: gray,
+    backgroundColor: white,
   },
   buttonEditMode: {
     paddingHorizontal: scale(10),

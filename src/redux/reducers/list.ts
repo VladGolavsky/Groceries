@@ -1,13 +1,23 @@
 import { createReducer } from 'redux-act';
+import { IProduct } from 'src/interfaces/list.interface';
 import * as actions from 'src/redux/actions';
 
-const initialState = {
+interface IListReducer {
+  list: Array<IProduct>;
 };
 
-const listReducer = createReducer({
-  [actions.setListAction]: (state, payload) => ({
+const initialState = {
+  list: [],
+};
+
+const listReducer = createReducer<IListReducer>({
+  [actions.setListAction]: (state: IListReducer, list: Array<IProduct>) => ({
     ...state,
-    ...payload,
+    list,
+  }),
+  [actions.addToListReduxAction]: (state: IListReducer, payload: IProduct) => ({
+    ...state,
+    list: state?.list?.concat(payload),
   }),
 }, initialState);
 

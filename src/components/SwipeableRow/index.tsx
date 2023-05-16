@@ -8,45 +8,40 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+import { IProduct } from 'src/interfaces/list.interface';
+import styles from './styles';
+import { scale } from 'react-native-size-matters';
+import { red } from 'src/constants/colors';
 
 const { width } = Dimensions.get('window');
 
-const SwipeableRow = () => {
+interface ISwipeableRow {
+  item: IProduct;
+  isEditMode: boolean;
+};
+
+const SwipeableRow = ({ item, isEditMode }: ISwipeableRow) => {
   const ref = useRef(null);
   const [isLoading, _isLoading] = useState(false);
 
-  const renderRightActions = (progress, dragX) => {
+  const renderRightActions = (progress: ReturnType<Animated.Value['interpolate']>, dragX: ReturnType<Animated.Value['interpolate']>) => {
     const opacity = dragX.interpolate({
       inputRange:  [-55, -50, -25, 0],
       outputRange: [1, 0.5, 0.2, 0],
     });
 
     return (
-      <Animated.View style={{
-        width: 75,
-        height: 75,
-        alignItems: 'center',
-        justifyContent: 'center',
-        opacity,
-        backgroundColor: 'gray',
-        borderWidth: 1,
-        borderColor: 'gray',
-      }}>
-        <Icon name='home' size={25} color='black'/>
+      <Animated.View style={[styles.rightPart, { opacity }]}>
+        <Icon name='home-outline' size={25} color='black'/>
       </Animated.View>
     );
   };
 
   const cartBlockRender = () => (
-    <View style={{
-      width: 75,
-      height: 75,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: 'gray',
-    }}>
-      <Icon name='shopping-cart' size={25} color='black'/>
+    <View style={styles.leftPart}>
+      <Icon name='cart-outline' size={scale(25)} color='black'/>
     </View>
   );
 
@@ -62,8 +57,8 @@ const SwipeableRow = () => {
 
   const changeStatus = () => {
     //...code of changing status
-    _isLoading(true);
-    setTimeout(() => _isLoading(false), 2500)
+    // _isLoading(true);
+    // setTimeout(() => _isLoading(false), 2500)
   };
 
   const loadingOverlay = () => isLoading && (
@@ -84,29 +79,40 @@ const SwipeableRow = () => {
     </View>
   );
 
+  if (isEditMode) {
+    return (
+      <View style={styles.contentEditMode}>
+        <TouchableOpacity style={styles.buttonRemove}>
+          <Icon name="remove-circle" size={scale(25)} color={red} />
+        </TouchableOpacity>
+        <Text style={styles.textTitle}>
+          {item?.productDetails?.title}
+        </Text>
+      </View>
+    );
+  }
+
   return (
     <>
       {loadingOverlay()}
-      <View style={{
-        borderBottomWidth: 1,
-        borderColor: 'gray',
-      }}>
+      <View style={styles.container}>
         <Swipeable
           ref={ref}
           onSwipeableOpen={changeStatus}
           onSwipeableClose={changeStatus}
           renderRightActions={renderRightActions}
+          overshootRight={false}
           overshootFriction={1}
         >
-          <View style={{ height: 75, width: width - 75, flexDirection: 'row', alignItems: 'center', }}>
+          <View style={styles.content}>
             { cartBlockRender() }
-            <Text style={{ fontSize: 24, paddingLeft: 15, }}>
-            Pizaa
+            <Text style={styles.textTitle}>
+              {item?.productDetails?.title}
             </Text>
           </View>
         </Swipeable>
       </View>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         activeOpacity={0.8}
         onPress={toCart}
         hitSlop={{ top: 15, right: 15, bottom: 15, left: 15 }}
@@ -121,7 +127,7 @@ const SwipeableRow = () => {
         style={{ marginTop: 20 }}
       >
         <Text>To home</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </>
   );
 };

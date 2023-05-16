@@ -11,18 +11,18 @@ import { get, post } from 'src/utils/api';
 import * as endpoints from 'src/constants/endpoints';
 import { navigationRef } from 'src/navigation';
 import { IAddToListAction } from '../actions/list/list.interface';
+import { IProduct } from 'src/interfaces/list.interface';
 
 function* getListSaga(): Generator {
   try {
     // yield put(setLoadingAction({ signIn: true }));
 
-    const { data } = (yield call(get, endpoints.getList()));
-    console.log('data', data)
+    const { data } = (yield call(get, endpoints.getList())) as { data: Array<IProduct> };
+    
     if (data) {
-      
+      yield put(actions.setListAction(data));
     }
   } catch (e: any) {
-    console.log('e', e)
   } finally {
   }
 };
@@ -31,15 +31,16 @@ function* addToListSaga({ payload } : { payload: IAddToListAction }): Generator 
   try {
     yield put(setLoadingAction({ addToList: true }));
 
-    const { data } = (yield call(post, endpoints.addToList(), { title: payload.title }));
-    console.log('data', data)
+    const { data } = (yield call(post, endpoints.addToList(), { title: payload.title })) as { data: IProduct };
+
     if (data) {
       navigationRef?.goBack();
+
+      yield put(actions.addToListReduxAction(data));
 
       yield put(setLoadingAction({ addToList: false }));
     }
   } catch (e: any) {
-    console.log('e', e)
     yield put(setLoadingAction({ addToList: false }));
   } finally {
   }
