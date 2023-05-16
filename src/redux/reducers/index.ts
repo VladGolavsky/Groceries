@@ -5,6 +5,7 @@ import loading from './loading';
 import errors from './errors';
 import user from './user';
 import list from './list';
+import config from './config';
 
 const reducer = combineReducers({
   auth,
@@ -12,6 +13,7 @@ const reducer = combineReducers({
   errors,
   user,
   list,
+  config,
 });
 
 export default reducer;

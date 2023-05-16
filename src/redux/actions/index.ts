@@ -3,3 +3,4 @@ export * from './loading';
 export * from './errors';
 export * from './user';
 export * from './list';
+export * from './config';
