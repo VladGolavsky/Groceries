@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import SettingsModalScreen from './SettigsModal';
+import SettingsModalScreen from './SettingsModal';
 import { apiUrlSelector, showSettingsModalSelector } from 'src/redux/selectors/config';
 import * as actions from 'src/redux/actions';
-import { INavigation } from 'src/interfaces/navigation.interface';
 import { navigationRef } from 'src/navigation';
 import { StackActions } from '@react-navigation/native';
 import { accessTokenSelector } from 'src/redux/selectors/auth';
