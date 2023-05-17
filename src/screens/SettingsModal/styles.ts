@@ -1,7 +1,7 @@
 import { StyleSheet, Dimensions } from "react-native";
 import { scale } from "react-native-size-matters";
 
-import { white } from "src/constants/colors";
+import { black, white } from "src/constants/colors";
 
 const { width } = Dimensions.get('window');
 
@@ -27,5 +27,6 @@ export default StyleSheet.create({
   },
   placeholder: {
     fontSize: scale(13),
+    color: black
   },
 });

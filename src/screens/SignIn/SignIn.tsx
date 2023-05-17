@@ -48,7 +48,7 @@ const SignInScreen: React.FC<ISignInScreen> = ({
         <KeyboardAvoidingView behavior="position"  style={styles.container}>
           <View style={styles.header}>
             <TouchableOpacity onPress={goToSettings} style={styles.buttonEditMode} hitSlop={scale(10)}>
-              <IconIonicIcons name="settings-outline" size={scale(24)} />
+              <IconIonicIcons name="settings-outline" size={scale(24)} color={black} />
             </TouchableOpacity>
             <TouchableOpacity onPress={goToSignUp} style={styles.buttonSignUp}>
               <Text style={styles.textSignUp}>{'SIGN UP'}</Text>

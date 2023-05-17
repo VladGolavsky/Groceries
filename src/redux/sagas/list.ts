@@ -2,6 +2,7 @@ import {
   all,
   call,
   put,
+  select,
   takeLatest,
 } from 'redux-saga/effects';
 import * as actions from 'src/redux/actions';
@@ -12,6 +13,7 @@ import * as endpoints from 'src/constants/endpoints';
 import { navigationRef } from 'src/navigation';
 import { IAddToListAction, IRemoveFromListAction, IUpdateProductStatusAction } from '../actions/list/list.interface';
 import { IProduct } from 'src/interfaces/list.interface';
+import { deviceIdSelector } from '../selectors/config';
 
 function* getListSaga(): Generator {
   try {
@@ -31,8 +33,9 @@ function* getListSaga(): Generator {
 function* addToListSaga({ payload } : { payload: IAddToListAction }): Generator {
   try {
     yield put(setLoadingAction({ addToList: true }));
+    const excludeId = yield select(deviceIdSelector);
 
-    const { data } = (yield call(post, endpoints.addToList(), { title: payload.title })) as { data: IProduct };
+    const { data } = (yield call(post, endpoints.addToList(), { title: payload.title, excludeId })) as { data: IProduct };
 
     if (data) {
       navigationRef?.goBack();
@@ -50,8 +53,9 @@ function* addToListSaga({ payload } : { payload: IAddToListAction }): Generator 
 function* removeFromListSaga({ payload } : { payload: IRemoveFromListAction }): Generator {
   try {
     yield put(setLoadingAction({ globalApp: true }));
+    const excludeId = (yield select(deviceIdSelector)) as string;
 
-    const { data } = (yield call(del, endpoints.removeFromList(payload._id))) as { data: boolean };
+    const { data } = (yield call(del, endpoints.removeFromList(payload._id, excludeId))) as { data: boolean };
 
     if (data) {
       yield put(actions.removeFromListReduxAction({ ...payload }));
@@ -68,8 +72,9 @@ function* removeFromListSaga({ payload } : { payload: IRemoveFromListAction }): 
 function* updateProductStatusSaga({ payload } : { payload: IUpdateProductStatusAction }): Generator {
   try {
     yield put(setLoadingAction({ globalApp: true }));
+    const excludeId = (yield select(deviceIdSelector)) as string;
 
-    const { data } = (yield call(patch, endpoints.updateProductStatus(), { ...payload })) as { data: IProduct };
+    const { data } = (yield call(patch, endpoints.updateProductStatus(), { ...payload, excludeId })) as { data: IProduct };
 
     if (data) {
       yield put(actions.updateProductStatusReduxAction(data));

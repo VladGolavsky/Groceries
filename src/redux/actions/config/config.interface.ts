@@ -10,6 +10,7 @@ export interface ConfigReducer {
   isValidApiUrl: boolean;
   apiUrl: string;
   showSettingsModal: boolean;
+  deviceId: string;
 };
 // export type ConfigReducer = Record<ConfigEnumType, boolean | String>;
 

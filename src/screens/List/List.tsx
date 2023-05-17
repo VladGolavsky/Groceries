@@ -9,6 +9,7 @@ import Header from "src/components/Header";
 import SwipeableRow from "src/components/SwipeableRow";
 import { IProduct } from "src/interfaces/list.interface";
 import { StatusEnum } from "src/enums/list.enum";
+import { black } from "src/constants/colors";
 
 
 interface IListScreen {
@@ -34,14 +35,14 @@ const ListScreen = ({ turnEditMode, isEditMode, goToAddToList, list, onDelete, o
     if (isEditMode) {
       return (
         <TouchableOpacity onPress={goToAddToList} style={styles.buttonEditMode} hitSlop={scale(10)}>
-          <Icon name="add-outline" size={scale(26)} />
+          <Icon name="add-outline" size={scale(26)} color={black}/>
         </TouchableOpacity>
       );
     }
     
     return (
       <TouchableOpacity onPress={goToSettings} style={styles.buttonEditMode} hitSlop={scale(10)}>
-        <Icon name="settings-outline" size={scale(26)} />
+        <Icon name="settings-outline" size={scale(26)}  color={black} />
       </TouchableOpacity>
     );
   }

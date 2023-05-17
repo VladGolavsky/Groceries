@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
+import { getUniqueId } from 'react-native-device-info';
+
+// import io from 'socket.io-client';
 
 import ListScreen from './List';
 
@@ -22,8 +25,41 @@ const List = ({ navigation } : INavigation) => {
     SplashScreen.hide();
   }, [])
 
+  // useEffect(() => {
+
+  //   socket.on('connect', function(data) {
+  //     console.log('installed', data);
+  //   });
+    
+  //   socket.on('message', function(data) {
+  //     console.log(`recieved: ${data}`);
+  //   });
+
+  //   socket.on('list-update-03EA1A71-9C66-487E-93F4-325F42147AC2', (res) => {
+  //     console.log('res', res)
+  //   });
+    
+  //   socket.on('disconnect', function() {
+  //     console.log('Disconnected');
+  //   });
+    
+  //   socket.on('error', function(error) {
+  //     console.log(`Error: ${error}`);
+  //   });
+    
+  // }, [])
+
+  useEffect(() => {
+    getUniqueId().then((uniqueId: string) => {
+      dispatch(actions.setDeviceIdAction(uniqueId));
+    });
+  }, [])
+
   useEffect(() => {
     dispatch(actions.getListAction());
+    getUniqueId().then((deviceId: string) => {
+      dispatch(actions.startListeningAction({ deviceId }));
+    });
   }, [apiUrl]);
 
   const turnEditMode = () => {

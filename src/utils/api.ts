@@ -18,7 +18,7 @@ export function* get(endpointRightSide: string, options?: AxiosRequestConfig | n
   } catch (error: any) {
     console.log('eeeee', error)
     if (!error?.response) throw error;
-    if (error?.response?.data?.status === 404) {
+    if (error?.response?.status === 404) {
       Alert.alert(ERRORS.SomethingWentWrong);
       throw 'ERROR';
     }
