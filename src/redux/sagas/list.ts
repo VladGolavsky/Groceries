@@ -10,7 +10,7 @@ import { setLoadingAction } from '../actions/loading';
 import { del, get, patch, post } from 'src/utils/api';
 import * as endpoints from 'src/constants/endpoints';
 import { navigationRef } from 'src/navigation';
-import { IAddToListAction, IRemoveFromListAction } from '../actions/list/list.interface';
+import { IAddToListAction, IRemoveFromListAction, IUpdateProductStatusAction } from '../actions/list/list.interface';
 import { IProduct } from 'src/interfaces/list.interface';
 
 function* getListSaga(): Generator {
@@ -65,7 +65,7 @@ function* removeFromListSaga({ payload } : { payload: IRemoveFromListAction }): 
   }
 };
 
-function* updateProductStatusSaga({ payload } : { payload: IRemoveFromListAction }): Generator {
+function* updateProductStatusSaga({ payload } : { payload: IUpdateProductStatusAction }): Generator {
   try {
     yield put(setLoadingAction({ globalApp: true }));
 
@@ -77,8 +77,10 @@ function* updateProductStatusSaga({ payload } : { payload: IRemoveFromListAction
       yield put(setLoadingAction({ globalApp: false }));
     }
   } catch (e: any) {
-    console.log('e', e)
-      yield put(setLoadingAction({ globalApp: false }));
+    if (payload?.undoChanges) {
+      payload.undoChanges();
+    }
+    yield put(setLoadingAction({ globalApp: false }));
   } finally {
   }
 };

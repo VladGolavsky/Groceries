@@ -35,8 +35,8 @@ const List = ({ navigation } : INavigation) => {
     dispatch(actions.removeFromListAction({ _id }))
   }
 
-  const onUpdateProduct = (_id: string, status: StatusEnum) => {
-    dispatch(actions.updateProductStatusAction({ _id, status: status === StatusEnum.cart ? StatusEnum.home : StatusEnum.cart }))
+  const onUpdateProduct = (_id: string, status: StatusEnum, undoChanges: () => void) => {
+    dispatch(actions.updateProductStatusAction({ _id, status: status === StatusEnum.cart ? StatusEnum.home : StatusEnum.cart, undoChanges }))
   }
 
   const goToAddToList = () => navigation.navigate('AddToList');

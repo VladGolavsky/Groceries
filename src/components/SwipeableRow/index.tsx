@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
+import SwipeRow from 'src/lib/SwipeRow';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { IProduct } from 'src/interfaces/list.interface';
@@ -22,55 +22,28 @@ interface ISwipeableRow {
   item: IProduct;
   isEditMode: boolean;
   onDelete: (_id: string) => void;
-  onUpdateProduct: (_id: string, status: StatusEnum) => void;
+  onUpdateProduct: (_id: string, status: StatusEnum, undoChanges: () => void) => void;
 };
 
 const SwipeableRow = ({ item, isEditMode, onDelete, onUpdateProduct }: ISwipeableRow) => {
-  const ref = useRef(null);
+  const ref = useRef();
+
   const [isLoading, _isLoading] = useState(false);
+  const [isError, setError] = useState<boolean>(false);
 
-  const renderRightActions = (progress: ReturnType<Animated.Value['interpolate']>, dragX: ReturnType<Animated.Value['interpolate']>) => {
-    const opacity = dragX.interpolate({
-      inputRange:  [-55, -50, -25, 0],
-      outputRange: [1, 0.5, 0.2, 0],
-    });
+  useEffect(() => {
+    if (item.status === StatusEnum.cart) {
+      ref.current?.manuallySwipeRow(85);
+    } else {
+      ref.current?.closeRow();
+    }
+  }, [item.status, isError]);
 
-    return (
-      <Animated.View style={[styles.rightPart, { opacity }]}>
-        <Icon name='home-outline' size={25} color='black'/>
-      </Animated.View>
-    );
-  };
-
-  const cartBlockRender = () => (
-    <View style={styles.leftPart}>
-      <Icon name='cart-outline' size={scale(25)} color='black'/>
-    </View>
-  );
-
-  const toCart = () => {
-    if (ref?.current)
-      ref?.current.close();
-  };
-
-  const toHome = () => {
-    if (ref?.current)
-      ref?.current.openRight();
-  };
-
-  useLayoutEffect(() => {
-    ref?.current?.openRight();
-
-    // if (item.status === StatusEnum.home) {
-    // }
-  }, []);
-
-  const changeStatus = () => {
-    onUpdateProduct(item._id, item.status);
-
-    //...code of changing status
-    // _isLoading(true);
-    // setTimeout(() => _isLoading(false), 2500)
+  const changeStatus = (openedValue?: number) => {
+    const updatedStatus = openedValue ? StatusEnum.cart : StatusEnum.home;
+    if (updatedStatus !== item.status) {
+      onUpdateProduct(item._id, item.status, () => setError(!isError));
+    }
   };
 
   const loadingOverlay = () => isLoading && (
@@ -103,28 +76,26 @@ const SwipeableRow = ({ item, isEditMode, onDelete, onUpdateProduct }: ISwipeabl
       </View>
     );
   }
-
-  console.log('ref', ref?.current)
-
+  
   return (
     <>
       {loadingOverlay()}
       <View style={styles.container}>
-        <Swipeable
-          ref={ref}
-          onSwipeableOpen={changeStatus}
-          onSwipeableClose={changeStatus}
-          renderRightActions={renderRightActions}
-          overshootRight={false}
-          overshootFriction={1}
-        >
-          <View style={styles.content}>
-            { cartBlockRender() }
-            <Text style={styles.textTitle}>
-              {item?.productDetails?.title}
-            </Text>
+        <SwipeRow ref={ref} leftOpenValue={85} stopLeftSwipe={85} stopRightSwipe={0.1} shoudBeOpened={item?.status === StatusEnum.cart} onRowDidOpen={changeStatus} onRowDidClose={changeStatus}>
+            <View style={styles.rowBack}>
+              <View style={styles.leftPart}>
+                <Icon name='cart-outline' size={scale(25)} color='black'/>
+              </View>
+              <View style={styles.rightPart}>
+                <Icon name='home-outline' size={25} color='black'/>
+              </View>
+            </View>
+            <View style={styles.content}>
+              <Text style={styles.textTitle}>
+                {item?.productDetails?.title}
+              </Text>
           </View>
-        </Swipeable>
+        </SwipeRow>
       </View>
     </>
   );

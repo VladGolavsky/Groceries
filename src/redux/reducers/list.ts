@@ -24,7 +24,7 @@ const listReducer = createReducer<IListReducer>({
     ...state,
     list: state?.list?.filter(item => item._id !== payload._id)
   }),
-  [actions.removeFromListReduxAction]: (state: IListReducer, payload: IProduct) => ({
+  [actions.updateProductStatusReduxAction]: (state: IListReducer, payload: IProduct) => ({
     ...state,
     list: state?.list?.map((item) => {
       if (item._id === payload._id) {

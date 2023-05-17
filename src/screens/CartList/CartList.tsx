@@ -3,7 +3,6 @@ import { TouchableOpacity, FlatList, Text } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { scale } from "react-native-size-matters";
 
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import SwipeableRow from "src/components/SwipeableRow";
 import Container from "src/components/Container";
 import Header from "src/components/Header";
@@ -19,7 +18,7 @@ interface ICartListScreen {
   goToAddToList: () => void;
   onDelete: (_id: string) => void;
   goToSettings: () => void;
-  onUpdateProduct: (_id: string, status: StatusEnum) => void;
+  onUpdateProduct: (_id: string, status: StatusEnum, undoChanges: () => void) => void;
 };
 
 const CartListScreen = ({ cartList, turnEditMode, isEditMode, goToAddToList, onDelete, onUpdateProduct, goToSettings } : ICartListScreen) => {
@@ -53,13 +52,12 @@ const CartListScreen = ({ cartList, turnEditMode, isEditMode, goToAddToList, onD
   return (
     <Container edges={[ 'top' ]}>
       <Header title={"Groceries"} renderRight={renderRight} renderLeft={renderLeft}/>
-      <GestureHandlerRootView style={styles.container}>
-        <FlatList
-          data={cartList}
-          renderItem={renderItem}
-          keyExtractor={item => item._id}
-        />
-      </GestureHandlerRootView>
+      <FlatList
+        data={cartList}
+        renderItem={renderItem}
+        keyExtractor={item => item._id}
+        style={styles.container}
+      />
     </Container>
   );
 };

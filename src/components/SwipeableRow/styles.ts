@@ -36,6 +36,7 @@ export default StyleSheet.create({
     width: width - scale(70),
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: white,
   },
   contentEditMode: {
     width,
@@ -48,4 +49,11 @@ export default StyleSheet.create({
   buttonRemove: {
     paddingLeft: scale(10),
   },
+  rowBack: {
+    height: scale(70),
+    alignItems: 'center',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  }
 })

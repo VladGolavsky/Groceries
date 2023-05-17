@@ -7,9 +7,9 @@ import { white } from 'src/constants/colors';
 import { loadingSelector } from 'src/redux/selectors';
 
 const Loader = () => {
-  const { fullApp: fullAppLoading } = useSelector(loadingSelector);
+  const { globalApp: globalAppLoading } = useSelector(loadingSelector);
 
-  if (!fullAppLoading) return null;
+  if (!globalAppLoading) return null;
 
   return (
     <View style={styles.container}>

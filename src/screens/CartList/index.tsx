@@ -30,8 +30,8 @@ const CartList = ({ navigation }: INavigation) => {
     dispatch(actions.setShowSettingsModalAction(true));
   };
 
-  const onUpdateProduct = (_id: string, status: StatusEnum) => {
-    dispatch(actions.updateProductStatusAction({ _id, status: status === StatusEnum.cart ? StatusEnum.home : StatusEnum.cart }))
+  const onUpdateProduct = (_id: string, status: StatusEnum, undoChanges: () => void) => {
+    dispatch(actions.updateProductStatusAction({ _id, status: status === StatusEnum.cart ? StatusEnum.home : StatusEnum.cart, undoChanges }))
   }
 
   return (

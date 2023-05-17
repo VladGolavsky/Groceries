@@ -9,4 +9,5 @@ export interface IRemoveFromListAction {
 export interface IUpdateProductStatusAction {
   _id: string;
   status: StatusEnum;
+  undoChanges?: () => void;
 };
