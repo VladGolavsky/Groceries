@@ -20,6 +20,7 @@ function* getListSaga(): Generator {
     const { data } = (yield call(get, endpoints.getList())) as { data: Array<IProduct> };
     
     if (data) {
+      console.log('dagt', data)
       yield put(actions.setListAction(data));
     }
   } catch (e: any) {
@@ -50,11 +51,10 @@ function* removeFromListSaga({ payload } : { payload: IRemoveFromListAction }): 
   try {
     yield put(setLoadingAction({ globalApp: true }));
 
-    const { data } = (yield call(del, endpoints.removeFromList(), { _id: payload._id })) as { data: IProduct };
+    const { data } = (yield call(del, endpoints.removeFromList(payload._id))) as { data: boolean };
 
     if (data) {
-      console.log('removeFromListReduxAction', data)
-      // yield put(actions.addToListReduxAction(data));
+      yield put(actions.removeFromListReduxAction({ ...payload }));
 
       yield put(setLoadingAction({ globalApp: false }));
     }
@@ -72,8 +72,7 @@ function* updateProductStatusSaga({ payload } : { payload: IRemoveFromListAction
     const { data } = (yield call(patch, endpoints.updateProductStatus(), { ...payload })) as { data: IProduct };
 
     if (data) {
-      console.log('update status', data)
-      // yield put(actions.addToListReduxAction(data));
+      yield put(actions.updateProductStatusReduxAction(data));
 
       yield put(setLoadingAction({ globalApp: false }));
     }

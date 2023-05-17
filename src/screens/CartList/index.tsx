@@ -6,6 +6,7 @@ import CartListScreen from './CartList';
 import { cartListSelector } from 'src/redux/selectors/list';
 import { INavigation } from 'src/interfaces/navigation.interface';
 import * as actions from 'src/redux/actions';
+import { StatusEnum } from 'src/enums/list.enum';
 
 const CartList = ({ navigation }: INavigation) => {
   const cartList = useSelector(cartListSelector);
@@ -25,6 +26,12 @@ const CartList = ({ navigation }: INavigation) => {
     dispatch(actions.removeFromListAction({ _id }))
   }
 
+  const goToSettigs = () => null;
+
+  const onUpdateProduct = (_id: string, status: StatusEnum) => {
+    dispatch(actions.updateProductStatusAction({ _id, status: status === StatusEnum.cart ? StatusEnum.home : StatusEnum.cart }))
+  }
+
   return (
     <CartListScreen
       cartList={cartList}
@@ -32,6 +39,8 @@ const CartList = ({ navigation }: INavigation) => {
       turnEditMode={turnEditMode}
       goToAddToList={goToAddToList}
       onDelete={onDelete}
+      goToSettigs={goToSettigs}
+      onUpdateProduct={onUpdateProduct}
     />
   );
 };

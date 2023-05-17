@@ -24,10 +24,6 @@ export function* get(endpoint: string, options?: AxiosRequestConfig | null) {
   } catch (error: any) {
     console.log('eeeee', error)
     if (!error?.response) throw error;
-    if (error?.response?.data?.statusCode === 501) {
-      yield put(actions.setConfigAction({ isValidApiUrl: false }))
-      throw 'ERROR';
-    }
     if (error?.response?.data?.statusCode === 401) {
       try {
         const refreshToken = (yield effects.select((state: IRootState ) => state.auth.refreshToken)) as string;
@@ -65,10 +61,6 @@ export function* del(endpoint: string, options?: AxiosRequestConfig | null) {
     return (yield effects.call((apiUrl ? apiBasic : api).delete, endpoint, options || {})) as AxiosResponse;
   } catch (error: any) {
     if (!error?.response) throw error;
-    if (error?.response?.data?.statusCode === 501) {
-      yield put(actions.setConfigAction({ isValidApiUrl: false }))
-      throw 'ERROR';
-    }
     if (error?.response?.data?.statusCode === 401) {
       try {
         const refreshToken = (yield effects.select((state: IRootState ) => state.auth.refreshToken)) as string;
@@ -105,10 +97,6 @@ export function* post(endpoint: string, data: any, options?: AxiosRequestConfig 
     return (yield effects.call((apiUrl ? apiBasic : api).post, endpoint, data, options || {})) as AxiosResponse;
   } catch (error: any) {
     if (!error?.response) throw error;
-    if (error?.response?.data?.statusCode === 501) {
-      yield put(actions.setConfigAction({ isValidApiUrl: false }))
-      throw 'ERROR';
-    }
     if (error?.response?.data?.statusCode === 401) {
       try {
         const refreshToken = (yield effects.select((state: IRootState ) => state.auth.refreshToken)) as string;
@@ -145,10 +133,6 @@ export function* put(endpoint: string, data: any, options?: AxiosRequestConfig |
     return (yield effects.call((apiUrl ? apiBasic : api).put, endpoint, data, options || {})) as AxiosResponse;
   } catch (error: any) {
     if (!error?.response) throw error;
-    if (error?.response?.data?.statusCode === 501) {
-      yield put(actions.setConfigAction({ isValidApiUrl: false }))
-      throw 'ERROR';
-    }
     if (error?.response?.data?.statusCode === 401) {
       try {
         const refreshToken = (yield effects.select((state: IRootState ) => state.auth.refreshToken)) as string;
@@ -187,10 +171,6 @@ export function* patch(endpoint: string, data: any, options?: AxiosRequestConfig
     return (yield effects.call((apiUrl ? apiBasic : api).patch, endpoint, data, options || {})) as AxiosResponse;
   } catch (error: any) {
     if (!error?.response) throw error;
-    if (error?.response?.data?.statusCode === 501) {
-      yield put(actions.setConfigAction({ isValidApiUrl: false }))
-      throw 'ERROR';
-    }
     if (error?.response?.data?.statusCode === 401) {
       try {
         const refreshToken = (yield effects.select((state: IRootState ) => state.auth.refreshToken)) as string;

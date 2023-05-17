@@ -8,6 +8,7 @@ import SwipeableRow from "src/components/SwipeableRow";
 import Container from "src/components/Container";
 import Header from "src/components/Header";
 import { IProduct } from "src/interfaces/list.interface";
+import { StatusEnum } from "src/enums/list.enum";
 
 import styles from "./styles";
 
@@ -17,9 +18,11 @@ interface ICartListScreen {
   isEditMode: boolean;
   goToAddToList: () => void;
   onDelete: (_id: string) => void;
+  goToSettigs: () => void;
+  onUpdateProduct: (_id: string, status: StatusEnum) => void;
 };
 
-const CartListScreen = ({ cartList, turnEditMode, isEditMode, goToAddToList, onDelete } : ICartListScreen) => {
+const CartListScreen = ({ cartList, turnEditMode, isEditMode, goToAddToList, onDelete, onUpdateProduct, goToSettigs } : ICartListScreen) => {
   const renderRight = () => (
     <TouchableOpacity onPress={turnEditMode} style={styles.buttonEditMode} hitSlop={scale(10)}>
       {
@@ -37,11 +40,15 @@ const CartListScreen = ({ cartList, turnEditMode, isEditMode, goToAddToList, onD
       );
     }
     
-    return null;
+    return (
+      <TouchableOpacity onPress={goToSettigs} style={styles.buttonEditMode} hitSlop={scale(10)}>
+        <Icon name="settings-outline" size={scale(26)} />
+      </TouchableOpacity>
+    );
   }
 
   const renderItem = ({ item }: { item: IProduct}) =>
-    <SwipeableRow item={item} isEditMode={isEditMode} onDelete={onDelete} />
+    <SwipeableRow item={item} isEditMode={isEditMode} onDelete={onDelete} onUpdateProduct={onUpdateProduct} />
 
   return (
     <Container edges={[ 'top' ]}>

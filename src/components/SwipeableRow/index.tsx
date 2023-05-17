@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,7 @@ import { IProduct } from 'src/interfaces/list.interface';
 import styles from './styles';
 import { scale } from 'react-native-size-matters';
 import { red } from 'src/constants/colors';
+import { StatusEnum } from 'src/enums/list.enum';
 
 const { width } = Dimensions.get('window');
 
@@ -21,9 +22,10 @@ interface ISwipeableRow {
   item: IProduct;
   isEditMode: boolean;
   onDelete: (_id: string) => void;
+  onUpdateProduct: (_id: string, status: StatusEnum) => void;
 };
 
-const SwipeableRow = ({ item, isEditMode, onDelete }: ISwipeableRow) => {
+const SwipeableRow = ({ item, isEditMode, onDelete, onUpdateProduct }: ISwipeableRow) => {
   const ref = useRef(null);
   const [isLoading, _isLoading] = useState(false);
 
@@ -56,7 +58,16 @@ const SwipeableRow = ({ item, isEditMode, onDelete }: ISwipeableRow) => {
       ref?.current.openRight();
   };
 
+  useLayoutEffect(() => {
+    ref?.current?.openRight();
+
+    // if (item.status === StatusEnum.home) {
+    // }
+  }, []);
+
   const changeStatus = () => {
+    onUpdateProduct(item._id, item.status);
+
     //...code of changing status
     // _isLoading(true);
     // setTimeout(() => _isLoading(false), 2500)
@@ -93,6 +104,8 @@ const SwipeableRow = ({ item, isEditMode, onDelete }: ISwipeableRow) => {
     );
   }
 
+  console.log('ref', ref?.current)
+
   return (
     <>
       {loadingOverlay()}
@@ -113,22 +126,6 @@ const SwipeableRow = ({ item, isEditMode, onDelete }: ISwipeableRow) => {
           </View>
         </Swipeable>
       </View>
-      {/* <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={toCart}
-        hitSlop={{ top: 15, right: 15, bottom: 15, left: 15 }}
-        style={{ marginTop: 20 }}
-      >
-        <Text>To cart</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={toHome}
-        hitSlop={{ top: 15, right: 15, bottom: 15, left: 15 }}
-        style={{ marginTop: 20 }}
-      >
-        <Text>To home</Text>
-      </TouchableOpacity> */}
     </>
   );
 };

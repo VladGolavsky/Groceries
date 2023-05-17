@@ -9,6 +9,7 @@ import Header from "src/components/Header";
 import SwipeableRow from "src/components/SwipeableRow";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { IProduct } from "src/interfaces/list.interface";
+import { StatusEnum } from "src/enums/list.enum";
 
 interface IListScreen {
   turnEditMode: () => void;
@@ -16,9 +17,11 @@ interface IListScreen {
   goToAddToList: () => void;
   list: Array<IProduct>;
   onDelete: (_id: string) => void;
+  onUpdateProduct: (_id: string, status: StatusEnum) => void;
+  goToSettigs: () => void;
 }
 
-const ListScreen = ({ turnEditMode, isEditMode, goToAddToList, list, onDelete } : IListScreen) => {
+const ListScreen = ({ turnEditMode, isEditMode, goToAddToList, list, onDelete, onUpdateProduct, goToSettigs } : IListScreen) => {
   const renderRight = () => (
     <TouchableOpacity onPress={turnEditMode} style={styles.buttonEditMode} hitSlop={scale(10)}>
       {
@@ -36,11 +39,15 @@ const ListScreen = ({ turnEditMode, isEditMode, goToAddToList, list, onDelete } 
       );
     }
     
-    return null;
+    return (
+      <TouchableOpacity onPress={goToSettigs} style={styles.buttonEditMode} hitSlop={scale(10)}>
+        <Icon name="settings-outline" size={scale(26)} />
+      </TouchableOpacity>
+    );
   }
 
   const renderItem = ({ item }: { item: IProduct}) =>
-    <SwipeableRow item={item} isEditMode={isEditMode} onDelete={onDelete} />
+    <SwipeableRow item={item} isEditMode={isEditMode} onDelete={onDelete} onUpdateProduct={onUpdateProduct} />
 
   return (
     <>
