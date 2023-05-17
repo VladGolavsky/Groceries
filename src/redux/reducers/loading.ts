@@ -14,6 +14,9 @@ const loadingReducer = createReducer<ILoadingReducer>({
     ...state,
     ...payload,
   }),
+  [actions.logoutAction]: () => ({
+    ...initialState,
+  }),
 }, initialState);
 
 export default loadingReducer;

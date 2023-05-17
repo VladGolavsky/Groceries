@@ -18,11 +18,11 @@ interface ICartListScreen {
   isEditMode: boolean;
   goToAddToList: () => void;
   onDelete: (_id: string) => void;
-  goToSettigs: () => void;
+  goToSettings: () => void;
   onUpdateProduct: (_id: string, status: StatusEnum) => void;
 };
 
-const CartListScreen = ({ cartList, turnEditMode, isEditMode, goToAddToList, onDelete, onUpdateProduct, goToSettigs } : ICartListScreen) => {
+const CartListScreen = ({ cartList, turnEditMode, isEditMode, goToAddToList, onDelete, onUpdateProduct, goToSettings } : ICartListScreen) => {
   const renderRight = () => (
     <TouchableOpacity onPress={turnEditMode} style={styles.buttonEditMode} hitSlop={scale(10)}>
       {
@@ -41,7 +41,7 @@ const CartListScreen = ({ cartList, turnEditMode, isEditMode, goToAddToList, onD
     }
     
     return (
-      <TouchableOpacity onPress={goToSettigs} style={styles.buttonEditMode} hitSlop={scale(10)}>
+      <TouchableOpacity onPress={goToSettings} style={styles.buttonEditMode} hitSlop={scale(10)}>
         <Icon name="settings-outline" size={scale(26)} />
       </TouchableOpacity>
     );

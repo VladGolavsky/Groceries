@@ -1,6 +1,7 @@
 import React, { createRef } from 'react';
 import { View, Text, TouchableOpacity, KeyboardAvoidingView, TextInput as RNTextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
+import IconIonicIcons from 'react-native-vector-icons/Ionicons';
 
 import Container from 'src/components/Container';
 import DismissKeyboard from 'src/components/DismissKeyboard';
@@ -9,7 +10,7 @@ import TextInput from 'src/components/TextInput';
 import styles from './styles';
 import Button from 'src/components/Button';
 import { black } from 'src/constants/colors';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale, scale } from 'react-native-size-matters';
 
 
 type ISignInScreen = {
@@ -22,6 +23,7 @@ type ISignInScreen = {
   goToSignUp: () => void;
   signInLoading: boolean;
   signInError: string;
+  goToSettings: () => void;
 }
 
 const SignInScreen: React.FC<ISignInScreen> = ({
@@ -34,6 +36,7 @@ const SignInScreen: React.FC<ISignInScreen> = ({
   goToSignUp,
   signInLoading,
   signInError,
+  goToSettings,
 }) => {
   const passwordRef = createRef<RNTextInput>();
 
@@ -43,10 +46,15 @@ const SignInScreen: React.FC<ISignInScreen> = ({
     <Container>
       <DismissKeyboard>
         <KeyboardAvoidingView behavior="position"  style={styles.container}>
-          <TouchableOpacity onPress={goToSignUp} style={styles.buttonSignUp}>
-            <Text style={styles.textSignUp}>{'SIGN UP'}</Text>
-            <Icon name="chevron-right" color={black} size={moderateScale(20)} style={styles.arrowIcon}/>
-          </TouchableOpacity>
+          <View style={styles.header}>
+            <TouchableOpacity onPress={goToSettings} style={styles.buttonEditMode} hitSlop={scale(10)}>
+              <IconIonicIcons name="settings-outline" size={scale(24)} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={goToSignUp} style={styles.buttonSignUp}>
+              <Text style={styles.textSignUp}>{'SIGN UP'}</Text>
+              <Icon name="chevron-right" color={black} size={moderateScale(20)} style={styles.arrowIcon}/>
+            </TouchableOpacity>
+          </View>
           <Text style={styles.textLogo}>Groceries</Text>
           <View style={styles.textInputsContainer}>
             <TextInput

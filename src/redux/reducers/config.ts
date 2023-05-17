@@ -4,7 +4,8 @@ import { ConfigReducer, SetConfigPayload } from '../actions/config/config.interf
 
 const initialState: ConfigReducer = {
   isValidApiUrl: true,
-  apiUrl: '',
+  apiUrl: 'https://2040-212-180-229-1.ngrok-free.app',
+  showSettingsModal: false,
 };
 
 const configReducer = createReducer<ConfigReducer>({
@@ -14,7 +15,11 @@ const configReducer = createReducer<ConfigReducer>({
   }),
   [actions.setDefaultConfigAction]: () => ({
     ...initialState,
-  })
+  }),
+  [actions.setShowSettingsModalAction]: (state: ConfigReducer, showSettingsModal: boolean) => ({
+    ...state,
+    showSettingsModal,
+  }),
 }, initialState);
 
 export default configReducer;

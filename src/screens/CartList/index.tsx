@@ -26,7 +26,9 @@ const CartList = ({ navigation }: INavigation) => {
     dispatch(actions.removeFromListAction({ _id }))
   }
 
-  const goToSettigs = () => null;
+  const goToSettings = () => {
+    dispatch(actions.setShowSettingsModalAction(true));
+  };
 
   const onUpdateProduct = (_id: string, status: StatusEnum) => {
     dispatch(actions.updateProductStatusAction({ _id, status: status === StatusEnum.cart ? StatusEnum.home : StatusEnum.cart }))
@@ -39,7 +41,7 @@ const CartList = ({ navigation }: INavigation) => {
       turnEditMode={turnEditMode}
       goToAddToList={goToAddToList}
       onDelete={onDelete}
-      goToSettigs={goToSettigs}
+      goToSettings={goToSettings}
       onUpdateProduct={onUpdateProduct}
     />
   );

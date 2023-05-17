@@ -34,6 +34,9 @@ const listReducer = createReducer<IListReducer>({
       return item;
     })
   }),
+  [actions.logoutAction]: () => ({
+    ...initialState,
+  }),
 }, initialState);
 
 export default listReducer;

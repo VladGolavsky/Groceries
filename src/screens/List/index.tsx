@@ -9,11 +9,13 @@ import { INavigation } from 'src/interfaces/navigation.interface';
 import { listSelector } from 'src/redux/selectors/list';
 import { LayoutAnimation } from 'react-native';
 import { StatusEnum } from 'src/enums/list.enum';
+import { apiUrlSelector } from 'src/redux/selectors/config';
 
 const List = ({ navigation } : INavigation) => {
   const dispatch = useDispatch();
 
   const list = useSelector(listSelector);
+  const apiUrl = useSelector(apiUrlSelector);
   const [isEditMode, setEditMode] = useState<boolean>(false);
 
   useEffect(() => {
@@ -22,7 +24,7 @@ const List = ({ navigation } : INavigation) => {
 
   useEffect(() => {
     dispatch(actions.getListAction());
-  }, []);
+  }, [apiUrl]);
 
   const turnEditMode = () => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -39,7 +41,9 @@ const List = ({ navigation } : INavigation) => {
 
   const goToAddToList = () => navigation.navigate('AddToList');
 
-  const goToSettigs = () => null;
+  const goToSettings = () => {
+    dispatch(actions.setShowSettingsModalAction(true));
+  };
 
   return (
     <ListScreen
@@ -49,7 +53,7 @@ const List = ({ navigation } : INavigation) => {
       list={list}
       onDelete={onDelete}
       onUpdateProduct={onUpdateProduct}
-      goToSettigs={goToSettigs}
+      goToSettings={goToSettings}
     />
   );
 };

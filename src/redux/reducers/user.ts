@@ -25,6 +25,9 @@ const userReducer = createReducer<IUser>({
     ...state,
     ...payload,
   }),
+  [actions.logoutAction]: () => ({
+    ...initialState,
+  }),
 }, initialState);
 
 export default userReducer;

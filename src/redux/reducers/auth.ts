@@ -17,6 +17,9 @@ const authReducer = createReducer<IAuthReducer>({
     ...state,
     ...payload,
   }),
+  [actions.logoutAction]: () => ({
+    ...initialState,
+  }),
 }, initialState);
 
 export default authReducer;

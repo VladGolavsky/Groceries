@@ -12,6 +12,9 @@ const errorsReducer = createReducer<IErrorReducer>({
     ...state,
     ...payload,
   }),
+  [actions.logoutAction]: () => ({
+    ...initialState,
+  }),
 }, initialState);
 
 export default errorsReducer;

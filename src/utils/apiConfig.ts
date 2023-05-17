@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const authInstance = axios.create({
-  baseURL: 'https://2040-212-180-229-1.ngrok-free.app',
+  baseURL: '',
   timeout: 1000 * 30, // 30 sec
 });
 

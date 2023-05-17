@@ -60,5 +60,12 @@ export default StyleSheet.create({
     color: red,
     fontSize: moderateScale(10),
     fontWeight: '500',
-  }
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  buttonEditMode: {
+    paddingHorizontal: scale(10),
+  },
 });

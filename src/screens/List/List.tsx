@@ -18,10 +18,10 @@ interface IListScreen {
   list: Array<IProduct>;
   onDelete: (_id: string) => void;
   onUpdateProduct: (_id: string, status: StatusEnum) => void;
-  goToSettigs: () => void;
+  goToSettings: () => void;
 }
 
-const ListScreen = ({ turnEditMode, isEditMode, goToAddToList, list, onDelete, onUpdateProduct, goToSettigs } : IListScreen) => {
+const ListScreen = ({ turnEditMode, isEditMode, goToAddToList, list, onDelete, onUpdateProduct, goToSettings } : IListScreen) => {
   const renderRight = () => (
     <TouchableOpacity onPress={turnEditMode} style={styles.buttonEditMode} hitSlop={scale(10)}>
       {
@@ -40,7 +40,7 @@ const ListScreen = ({ turnEditMode, isEditMode, goToAddToList, list, onDelete, o
     }
     
     return (
-      <TouchableOpacity onPress={goToSettigs} style={styles.buttonEditMode} hitSlop={scale(10)}>
+      <TouchableOpacity onPress={goToSettings} style={styles.buttonEditMode} hitSlop={scale(10)}>
         <Icon name="settings-outline" size={scale(26)} />
       </TouchableOpacity>
     );

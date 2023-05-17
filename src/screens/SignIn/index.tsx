@@ -11,6 +11,7 @@ import { signInAction } from 'src/redux/actions';
 import { errorsSelector, loadingSelector } from 'src/redux/selectors';
 import { setErrorAction } from 'src/redux/actions/errors';
 import * as ERRORS from 'src/constants/errors';
+import * as actions from 'src/redux/actions';
 
 const SignIn: React.FC<INavigation> = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -46,6 +47,10 @@ const SignIn: React.FC<INavigation> = ({ navigation }) => {
   const onUseWithoutAccount = () => {
 
   }
+
+  const goToSettings = () => {
+    dispatch(actions.setShowSettingsModalAction(true));
+  }
   
   const goToSignUp = () => {
     navigation.navigate('SignUp')
@@ -62,6 +67,7 @@ const SignIn: React.FC<INavigation> = ({ navigation }) => {
     goToSignUp={goToSignUp}
     signInLoading={signInLoading}
     signInError={signInError}
+    goToSettings={goToSettings}
    />
   );
 }

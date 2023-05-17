@@ -7,7 +7,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { lightGray } from 'src/constants/colors';
 import store, { persistor } from './redux';
 import Loader from './components/Loader';
-import { RootApiUrlModal } from './screens/RootApiUrlModal';
+import SettingsModal from './screens/SettingsModal';
 
 export default () => {
   return (
@@ -17,7 +17,7 @@ export default () => {
           {Platform.OS === 'android' && <StatusBar barStyle={"dark-content"} backgroundColor={lightGray} />}
           <RootNavigation />
           <Loader />
-          <RootApiUrlModal/>
+          <SettingsModal />
         </PersistGate>
       </Provider>
     </>
