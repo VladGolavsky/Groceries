@@ -24,6 +24,21 @@ const createSocketChannel = (socket: Socket, deviceId: string) => eventChannel((
       emit({ type, data });
     };
     // socket.on('', handler);
+    socket.on('connect', () => {
+      console.log('connected');
+      handler({ type: 'connected', data: {} })
+    })
+
+    socket.on('disconnect', () => {
+      console.log('disconnected');
+      handler({ type: 'disconnected', data: {} })
+    })
+
+    socket.on('error', () => {
+      console.log('error');
+      handler({ type: 'disconnected', data: {} })
+    })
+
     socket.on(`list-update-${deviceId}`, (data: IProduct) => {
       handler({type: 'list-update', data});
     })
@@ -37,6 +52,9 @@ const createSocketChannel = (socket: Socket, deviceId: string) => eventChannel((
     })
     
     return () => {
+      socket.off('connect', () => handler({ type: 'connected', data: {} }));
+      socket.off('disconnect', () => handler({ type: 'disconnected', data: {} }));
+      socket.off('error', () => handler({ type: 'disconnected', data: {} }));
       socket.off(`list-update-${deviceId}`, handler);
       socket.off(`list-create-${deviceId}`, handler);
       socket.off(`list-delete-${deviceId}`, handler);
@@ -47,11 +65,13 @@ function* startListeningSaga({ payload } : { payload: { deviceId: string } }): G
   try {
     const deviceId = (yield select(deviceIdSelector)) || payload.deviceId;
     const apiUrl = (yield select(apiUrlSelector)) as string;
-    const apiUrlRightPart = apiUrl?.replace('https', 'wss');
+    const updatedApiUrl = apiUrl?.replace('https', 'wss');
+    console.log('updatedApiUrl', updatedApiUrl)
+    const socket: Socket = io(updatedApiUrl);
+    // const socket: Socket = io('web-production-baa0.up.railway.app');
 
-    const socket: Socket = io(apiUrlRightPart);
-
-    const socketChannel = yield call(createSocketChannel, socket, deviceId);
+    // @ts-ignore
+    const socketChannel: any = (yield call(createSocketChannel, {socket, deviceId}));
 
     while (true) {
       const payload = (yield take(socketChannel)) as SocketHandler;
@@ -64,6 +84,12 @@ function* startListeningSaga({ payload } : { payload: { deviceId: string } }): G
           break;
         case 'list-delete':
           yield put(actions.removeFromListReduxAction({ _id: payload.data._id }));
+          break;
+        case 'connected':
+          yield put(actions.setSocketConnectionStatusAction(true));
+          break;
+        case 'disconnected':
+          yield put(actions.setSocketConnectionStatusAction(false));
           break;
         default:
           break;

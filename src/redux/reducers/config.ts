@@ -4,9 +4,10 @@ import { ConfigReducer, SetConfigPayload } from '../actions/config/config.interf
 
 const initialState: ConfigReducer = {
   isValidApiUrl: true,
-  apiUrl: 'https://2040-212-180-229-1.ngrok-free.app',
+  apiUrl: 'https://web-production-baa0.up.railway.app',
   showSettingsModal: false,
   deviceId: '',
+  isSocketConnected: false,
 };
 
 const configReducer = createReducer<ConfigReducer>({
@@ -24,6 +25,10 @@ const configReducer = createReducer<ConfigReducer>({
   [actions.setDeviceIdAction]: (state: ConfigReducer, deviceId: string) => ({
     ...state,
     deviceId,
+  }),
+  [actions.setSocketConnectionStatusAction]: (state: ConfigReducer, isSocketConnected: boolean) => ({
+    ...state,
+    isSocketConnected,
   }),
 }, initialState);
 

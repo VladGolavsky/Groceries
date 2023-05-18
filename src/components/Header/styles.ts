@@ -29,4 +29,18 @@ export default StyleSheet.create({
     fontSize: scale(20),
     letterSpacing: -0.5,
   },
+  dot: {
+    backgroundColor: black,
+    marginTop: scale(4),
+    marginLeft: scale(5),
+    height: scale(3),
+    width: scale(3),
+    borderRadius: scale(3),
+  },
+  titleContainer: {
+    flexDirection: 'row',
+  },
+  emptyDot: {
+    backgroundColor: 'transparent',
+  },
 });
