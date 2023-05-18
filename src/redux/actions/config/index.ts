@@ -8,3 +8,4 @@ export const setShowSettingsModalAction = createAction<boolean>('SET_SHOW_SWTTIN
 export const logoutAction = createAction('LOGOUT_ACTION');
 export const setDeviceIdAction = createAction<string>("SET_DEVICE_ID_ACTION");
 export const setSocketConnectionStatusAction = createAction<boolean>("SET_SOCKET_CONNECTION_STATUS_ACTION");
+export const setNetConnectionStatusAction = createAction<boolean>('SET_NET_CONNECTION_STATUS_ACTION');

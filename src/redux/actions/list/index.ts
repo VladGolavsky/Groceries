@@ -13,4 +13,8 @@ export const removeFromListReduxAction = createAction<IRemoveFromListAction>("RE
 
 export const updateProductStatusAction = createAction<IUpdateProductStatusAction>('UPDATE_PRODUCT_STATUS_ACTION');
 export const updateProductStatusReduxAction = createAction<IProduct>('UPDATE_PRODUCT_STATUS_REDUX_ACTION');
-export const updateProductStatusReduxWithoutAccountAction = createAction<IUpdateProductStatusReduxWithoutAccountAction>('UPDATE_PRODUCT_STATUS_REDUX_WITHOUT_ACCOUNT_ACTION')
+export const updateProductStatusReduxWithoutAccountAction = createAction<IUpdateProductStatusReduxWithoutAccountAction>('UPDATE_PRODUCT_STATUS_REDUX_WITHOUT_ACCOUNT_ACTION');
+
+export const updateProductStatusSyncReduxAction = createAction<IUpdateProductStatusReduxWithoutAccountAction>('UPDATE_PRODUCT_STATUS_SYNC_REDUX_ACTION');
+export const uploadProductStatusesFromReduxAction = createAction("UPLOAD_PRODUC_STATUSES_FROM_REDUX_ACTION");
+export const clearSyncAction = createAction('CREAR_SYNC_ACTION');

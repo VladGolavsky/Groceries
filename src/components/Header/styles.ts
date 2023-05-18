@@ -1,7 +1,7 @@
 import { StyleSheet, Dimensions } from "react-native";
 import { scale } from "react-native-size-matters";
 
-import { black, lightGray } from "src/constants/colors";
+import { black, gray, green, lightGray } from "src/constants/colors";
 
 const { width } = Dimensions.get('window');
 
@@ -30,17 +30,17 @@ export default StyleSheet.create({
     letterSpacing: -0.5,
   },
   dot: {
-    backgroundColor: black,
-    marginTop: scale(4),
+    backgroundColor: green,
+    marginTop: scale(8),
     marginLeft: scale(5),
-    height: scale(3),
-    width: scale(3),
-    borderRadius: scale(3),
+    height: scale(5),
+    width: scale(5),
+    borderRadius: scale(5),
   },
   titleContainer: {
     flexDirection: 'row',
   },
   emptyDot: {
-    backgroundColor: 'transparent',
+    backgroundColor: black,
   },
 });

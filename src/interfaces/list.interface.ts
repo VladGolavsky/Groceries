@@ -11,3 +11,8 @@ export interface IProduct {
   productId: string;
   status: StatusEnum;
 };
+
+export interface IProducShort {
+  _id: string;
+  status: StatusEnum;
+};

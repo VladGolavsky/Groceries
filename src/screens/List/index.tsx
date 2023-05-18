@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 import { getUniqueId } from 'react-native-device-info';
-
-// import io from 'socket.io-client';
+import NetInfo from "@react-native-community/netinfo";
 
 import ListScreen from './List';
 
@@ -12,7 +11,7 @@ import { INavigation } from 'src/interfaces/navigation.interface';
 import { listSelector } from 'src/redux/selectors/list';
 import { LayoutAnimation } from 'react-native';
 import { StatusEnum } from 'src/enums/list.enum';
-import { apiUrlSelector } from 'src/redux/selectors/config';
+import { apiUrlSelector, isNetConnectedSelector } from 'src/redux/selectors/config';
 import { usingWithoutAccountSelector } from 'src/redux/selectors/auth';
 
 const List = ({ navigation } : INavigation) => {
@@ -21,6 +20,7 @@ const List = ({ navigation } : INavigation) => {
   const list = useSelector(listSelector);
   const apiUrl = useSelector(apiUrlSelector);
   const usingWithoutAccount = useSelector(usingWithoutAccountSelector);
+  const isNetConnected = useSelector(isNetConnectedSelector);
 
   const [isEditMode, setEditMode] = useState<boolean>(false);
 
@@ -28,29 +28,21 @@ const List = ({ navigation } : INavigation) => {
     SplashScreen.hide();
   }, [])
 
-  // useEffect(() => {
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      dispatch(actions.setNetConnectionStatusAction(state.isConnected || false ));
+    });
+    
+    return () => {
+      unsubscribe();
+    } 
+  }, []);
 
-  //   socket.on('connect', function(data) {
-  //     console.log('installed', data);
-  //   });
-    
-  //   socket.on('message', function(data) {
-  //     console.log(`recieved: ${data}`);
-  //   });
-
-  //   socket.on('list-update-03EA1A71-9C66-487E-93F4-325F42147AC2', (res) => {
-  //     console.log('res', res)
-  //   });
-    
-  //   socket.on('disconnect', function() {
-  //     console.log('Disconnected');
-  //   });
-    
-  //   socket.on('error', function(error) {
-  //     console.log(`Error: ${error}`);
-  //   });
-    
-  // }, [])
+  useEffect(() => {
+    if (isNetConnected && !usingWithoutAccount) {
+      dispatch(actions.uploadProductStatusesFromReduxAction());
+    }
+  }, [isNetConnected])
 
   useEffect(() => {
     getUniqueId().then((uniqueId: string) => {
@@ -60,7 +52,7 @@ const List = ({ navigation } : INavigation) => {
 
   useEffect(() => {
     if (!usingWithoutAccount) {
-      dispatch(actions.getListAction());
+      // dispatch(actions.getListAction());
       getUniqueId().then((deviceId: string) => {
         dispatch(actions.startListeningAction({ deviceId }));
       });
@@ -82,9 +74,13 @@ const List = ({ navigation } : INavigation) => {
 
   const onUpdateProduct = (_id: string, status: StatusEnum, undoChanges: () => void) => {
     if (usingWithoutAccount) {
-      dispatch(actions.updateProductStatusReduxWithoutAccountAction({ _id, status: status === StatusEnum.cart ? StatusEnum.home : StatusEnum.cart }))
+      dispatch(actions.updateProductStatusReduxWithoutAccountAction({ _id, status: status === StatusEnum.cart ? StatusEnum.home : StatusEnum.cart }));
     } else {
-      dispatch(actions.updateProductStatusAction({ _id, status: status === StatusEnum.cart ? StatusEnum.home : StatusEnum.cart, undoChanges }))
+      if (isNetConnected) {
+        dispatch(actions.updateProductStatusAction({ _id, status: status === StatusEnum.cart ? StatusEnum.home : StatusEnum.cart, undoChanges }));
+      } else {
+        dispatch(actions.updateProductStatusSyncReduxAction({ _id, status: status === StatusEnum.cart ? StatusEnum.home : StatusEnum.cart }));
+      }
     }
   }
 

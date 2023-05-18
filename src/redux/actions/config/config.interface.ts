@@ -12,6 +12,7 @@ export interface ConfigReducer {
   showSettingsModal: boolean;
   deviceId: string;
   isSocketConnected: boolean;
+  isNetConnected: boolean;
 };
 // export type ConfigReducer = Record<ConfigEnumType, boolean | String>;
 

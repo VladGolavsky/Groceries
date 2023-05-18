@@ -12,8 +12,9 @@ import { del, get, patch, post } from 'src/utils/api';
 import * as endpoints from 'src/constants/endpoints';
 import { navigationRef } from 'src/navigation';
 import { IAddToListAction, IRemoveFromListAction, IUpdateProductStatusAction } from '../actions/list/list.interface';
-import { IProduct } from 'src/interfaces/list.interface';
+import { IProducShort, IProduct } from 'src/interfaces/list.interface';
 import { deviceIdSelector } from '../selectors/config';
+import { syncListStateSelector } from '../selectors/list';
 
 function* getListSaga(): Generator {
   try {
@@ -90,11 +91,33 @@ function* updateProductStatusSaga({ payload } : { payload: IUpdateProductStatusA
   }
 };
 
+function* uploadProductStatusesFromReduxSaga(): Generator {
+  try {
+    yield put(setLoadingAction({ globalApp: true }));
+
+    const syncList = (yield select(syncListStateSelector)) as Array<IProducShort>;
+
+    if (syncList.length) {
+      console.log('aksdjfhalsdkfjahsdlfk')
+
+    } else {
+      yield getListSaga();
+    }
+
+
+    yield put(setLoadingAction({ globalApp: false }));
+  } catch (e: any) {
+    yield put(setLoadingAction({ globalApp: false }));
+  } finally {
+  }
+};
+
 export default function* listSaga() {
   yield all([
     takeLatest(actions.getListAction, getListSaga),
     takeLatest(actions.addToListAction, addToListSaga),
     takeLatest(actions.removeFromListAction, removeFromListSaga),
-    takeLatest(actions.updateProductStatusAction, updateProductStatusSaga)
+    takeLatest(actions.updateProductStatusAction, updateProductStatusSaga),
+    takeLatest(actions.uploadProductStatusesFromReduxAction, uploadProductStatusesFromReduxSaga),
   ]);
 };

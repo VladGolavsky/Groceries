@@ -66,12 +66,12 @@ function* startListeningSaga({ payload } : { payload: { deviceId: string } }): G
     const deviceId = (yield select(deviceIdSelector)) || payload.deviceId;
     const apiUrl = (yield select(apiUrlSelector)) as string;
     const updatedApiUrl = apiUrl?.replace('https', 'wss');
-    console.log('updatedApiUrl', updatedApiUrl)
+
     const socket: Socket = io(updatedApiUrl);
     // const socket: Socket = io('web-production-baa0.up.railway.app');
 
     // @ts-ignore
-    const socketChannel: any = (yield call(createSocketChannel, {socket, deviceId}));
+    const socketChannel: any = (yield call(createSocketChannel, socket, deviceId));
 
     while (true) {
       const payload = (yield take(socketChannel)) as SocketHandler;
