@@ -4,14 +4,18 @@ import { useSelector } from 'react-redux';
 import { Platform, UIManager } from 'react-native';
 
 import { INavigation } from 'src/interfaces/navigation.interface';
-import { accessTokenSelector } from './redux/selectors/auth';
+import { accessTokenSelector, usingWithoutAccountSelector } from './redux/selectors/auth';
 import { setAuthHeader } from './utils/apiConfig';
 
 const Root: React.FC<INavigation> = ({ navigation }) => {
   const accessToken = useSelector(accessTokenSelector);
+  const usingWithoutAccount = useSelector(usingWithoutAccountSelector);
+
   useEffect(() => {
     if (accessToken) {
       setAuthHeader(accessToken);
+      navigation.replace('Home');
+    } else if (usingWithoutAccount) {
       navigation.replace('Home');
     } else {
       navigation.replace('SignIn')

@@ -1,7 +1,7 @@
 import { createReducer } from 'redux-act';
 import { IProduct } from 'src/interfaces/list.interface';
 import * as actions from 'src/redux/actions';
-import { IRemoveFromListAction } from '../actions/list/list.interface';
+import { IRemoveFromListAction, IUpdateProductStatusReduxWithoutAccountAction } from '../actions/list/list.interface';
 
 interface IListReducer {
   list: Array<IProduct>;
@@ -33,6 +33,19 @@ const listReducer = createReducer<IListReducer>({
 
       return item;
     })
+  }),
+  [actions.updateProductStatusReduxWithoutAccountAction]: (state: IListReducer, payload: IUpdateProductStatusReduxWithoutAccountAction) => ({
+    ...state,
+    list: state?.list?.map((item) => {
+      if (item._id === payload._id) {
+        return {
+          ...item,
+          status: payload.status,
+        };
+      }
+
+      return item;
+    }),
   }),
   [actions.logoutAction]: () => ({
     ...initialState,

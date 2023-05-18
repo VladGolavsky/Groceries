@@ -16,9 +16,10 @@ interface IAddToListScreen {
   setTitle: (text: string) => void;
   title: string;
   loading: boolean;
+  error: string;
 };
 
-const AddToListScreen = ({ goBack, onDone, title, setTitle, loading } : IAddToListScreen) => {
+const AddToListScreen = ({ goBack, onDone, title, setTitle, loading, error } : IAddToListScreen) => {
   const renderLeft = () => (
     <TouchableOpacity style={styles.buttonHeader} hitSlop={scale(10)} onPress={goBack}>
       <Text style={styles.buttonTextHeader}>Cancel</Text>
@@ -47,8 +48,10 @@ const AddToListScreen = ({ goBack, onDone, title, setTitle, loading } : IAddToLi
               onChangeText={setTitle}
               additionStyles={styles.textInput}
               maxLength={30}
+              placeholder='Title'
               returnKeyType="done"
               onSubmitEditing={onDone}
+              error={error}
             />
           </View>
         </DismissKeyboard>

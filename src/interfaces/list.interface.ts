@@ -10,5 +10,4 @@ export interface IProduct {
   productDetails: IPruductDetails;
   productId: string;
   status: StatusEnum;
-  uId: string;
 };

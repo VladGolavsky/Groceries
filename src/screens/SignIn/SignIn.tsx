@@ -24,6 +24,8 @@ type ISignInScreen = {
   signInLoading: boolean;
   signInError: string;
   goToSettings: () => void;
+  usingWithoutAccount: boolean;
+  goBack: () => void;
 }
 
 const SignInScreen: React.FC<ISignInScreen> = ({
@@ -37,6 +39,8 @@ const SignInScreen: React.FC<ISignInScreen> = ({
   signInLoading,
   signInError,
   goToSettings,
+  usingWithoutAccount,
+  goBack,
 }) => {
   const passwordRef = createRef<RNTextInput>();
 
@@ -47,9 +51,17 @@ const SignInScreen: React.FC<ISignInScreen> = ({
       <DismissKeyboard>
         <KeyboardAvoidingView behavior="position"  style={styles.container}>
           <View style={styles.header}>
-            <TouchableOpacity onPress={goToSettings} style={styles.buttonEditMode} hitSlop={scale(10)}>
-              <IconIonicIcons name="settings-outline" size={scale(24)} color={black} />
-            </TouchableOpacity>
+            {
+              usingWithoutAccount ? (
+                <TouchableOpacity onPress={goBack} style={styles.buttonEditMode} hitSlop={scale(10)}>
+                  <Icon name="chevron-left" color={black} size={scale(24)} style={styles.arrowIcon}/>
+                </TouchableOpacity>
+              ) : (
+              <TouchableOpacity onPress={goToSettings} style={styles.buttonEditMode} hitSlop={scale(10)}>
+                <IconIonicIcons name="settings-outline" size={scale(24)} color={black} />
+              </TouchableOpacity>
+              )
+            }
             <TouchableOpacity onPress={goToSignUp} style={styles.buttonSignUp}>
               <Text style={styles.textSignUp}>{'SIGN UP'}</Text>
               <Icon name="chevron-right" color={black} size={moderateScale(20)} style={styles.arrowIcon}/>

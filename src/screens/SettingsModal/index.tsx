@@ -6,7 +6,7 @@ import { apiUrlSelector, showSettingsModalSelector } from 'src/redux/selectors/c
 import * as actions from 'src/redux/actions';
 import { navigationRef } from 'src/navigation';
 import { StackActions } from '@react-navigation/native';
-import { accessTokenSelector } from 'src/redux/selectors/auth';
+import { accessTokenSelector, usingWithoutAccountSelector } from 'src/redux/selectors/auth';
 
 const SettingsModal = () => {
   const dispatch = useDispatch();
@@ -14,6 +14,7 @@ const SettingsModal = () => {
   const showSettingsModal = useSelector(showSettingsModalSelector);
   const apiUrl = useSelector(apiUrlSelector);
   const accessToken = useSelector(accessTokenSelector);
+  const usingWithoutAccount = useSelector(usingWithoutAccountSelector);
 
   const [url, setUrl] = useState(apiUrl);
 
@@ -31,6 +32,11 @@ const SettingsModal = () => {
     dispatch(actions.setConfigAction({ apiUrl: url, showSettingsModal: false }));
   }
 
+  const goToLogin = () => {
+    closeModal();
+    navigationRef.current?.navigate('SignIn');
+  }
+
   return (
     <SettingsModalScreen
       showSettingsModal={showSettingsModal}
@@ -40,6 +46,8 @@ const SettingsModal = () => {
       logout={logout}
       onApply={onApply}
       accessToken={accessToken}
+      usingWithoutAccount={usingWithoutAccount}
+      goToLogin={goToLogin}
     />
   );
 };

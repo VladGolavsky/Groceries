@@ -77,13 +77,13 @@ function* startListeningSaga({ payload } : { payload: { deviceId: string } }): G
       const payload = (yield take(socketChannel)) as SocketHandler;
       switch (payload?.type) {
         case 'list-update':
-          yield put(actions.updateProductStatusReduxAction(payload.data));
+          yield put(actions.updateProductStatusReduxAction(payload?.data));
           break;
         case 'list-create':
-          yield put(actions.addToListReduxAction(payload.data));
+          yield put(actions.addToListReduxAction(payload?.data));
           break;
         case 'list-delete':
-          yield put(actions.removeFromListReduxAction({ _id: payload.data._id }));
+          yield put(actions.removeFromListReduxAction({ _id: payload?.data?._id }));
           break;
         case 'connected':
           yield put(actions.setSocketConnectionStatusAction(true));

@@ -16,6 +16,8 @@ interface ISettingsModalScreen {
   logout: () => void;
   onApply: () => void;
   accessToken: string | null;
+  usingWithoutAccount: boolean;
+  goToLogin: () => void;
 }
 
 const SettingsModalScreen = ({
@@ -26,6 +28,8 @@ const SettingsModalScreen = ({
   logout,
   onApply,
   accessToken,
+  usingWithoutAccount,
+  goToLogin,
 }: ISettingsModalScreen) => {
   return (
     <Modal
@@ -38,20 +42,36 @@ const SettingsModalScreen = ({
         <TouchableOpacity style={styles.buttonClose} onPress={closeModal}>
           <Icon name="close-outline" size={scale(25)} />
         </TouchableOpacity>
-        <Text style={styles.placeholder}>
-          Api url
-        </Text>
-        <TextInput
-          value={url}
-          onChangeText={setUrl}
-          onSubmitEditing={onApply}
-        />
-        <View style={styles.buttonContainer}>
-          <Button
-            title='APPLY'
-            onPress={onApply}
-          />
-        </View>
+        {
+          !usingWithoutAccount ? (
+            <>
+              <Text style={styles.placeholder}>
+                Api url
+              </Text>
+              <TextInput
+                value={url}
+                onChangeText={setUrl}
+                onSubmitEditing={onApply}
+              />
+              <View style={styles.buttonContainer}>
+                <Button
+                  title='APPLY'
+                  onPress={onApply}
+                />
+              </View>
+            </>
+          ) : null
+        }
+        {
+          usingWithoutAccount ? (
+            <View style={styles.buttonContainer}>
+              <Button
+                title='LOGIN'
+                onPress={goToLogin}
+              />
+            </View>
+          ) : null
+        }
         {
           accessToken ? (
             <View style={styles.buttonContainer}>

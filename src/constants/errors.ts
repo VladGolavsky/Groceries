@@ -6,3 +6,5 @@ export const WeakPassword = 'Password should contain at least lower and upper ca
 export const PasswordsNotSame = 'Passwords should be same.';
 
 export const SomethingWentWrong = 'Something went wrong. Please, try again later or try to change link.';
+
+export const FillTitle = 'Please, fill title';

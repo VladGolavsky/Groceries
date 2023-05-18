@@ -6,3 +6,4 @@ export const signInAction = createAction<ISignInAction>('SIGN_IN_ACTION');
 export const setTokensAction = createAction<ISetTokenAction>('SET_TOKENS_ACTION');
 
 export const signUpAction = createAction<ISignUpAction>('SIGN_UP_ACTION');
+export const setUsingWithoutAccountAction = createAction<boolean>('SET_USING_WITHOUT_ACCOUNT_ACTION');

@@ -12,12 +12,14 @@ import { errorsSelector, loadingSelector } from 'src/redux/selectors';
 import { setErrorAction } from 'src/redux/actions/errors';
 import * as ERRORS from 'src/constants/errors';
 import * as actions from 'src/redux/actions';
+import { usingWithoutAccountSelector } from 'src/redux/selectors/auth';
 
 const SignIn: React.FC<INavigation> = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const { signIn: signInLoading } = useSelector(loadingSelector);
   const { signIn: signInError } = useSelector(errorsSelector);
+  const usingWithoutAccount = useSelector(usingWithoutAccountSelector);
 
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -45,7 +47,8 @@ const SignIn: React.FC<INavigation> = ({ navigation }) => {
   }
 
   const onUseWithoutAccount = () => {
-
+    dispatch(actions.setUsingWithoutAccountAction(true));
+    navigation.replace('Home');
   }
 
   const goToSettings = () => {
@@ -54,6 +57,10 @@ const SignIn: React.FC<INavigation> = ({ navigation }) => {
   
   const goToSignUp = () => {
     navigation.navigate('SignUp')
+  }
+
+  const goBack = () => {
+    navigation.goBack();
   }
 
   return (
@@ -68,6 +75,8 @@ const SignIn: React.FC<INavigation> = ({ navigation }) => {
     signInLoading={signInLoading}
     signInError={signInError}
     goToSettings={goToSettings}
+    usingWithoutAccount={usingWithoutAccount}
+    goBack={goBack}
    />
   );
 }

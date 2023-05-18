@@ -13,12 +13,15 @@ import { listSelector } from 'src/redux/selectors/list';
 import { LayoutAnimation } from 'react-native';
 import { StatusEnum } from 'src/enums/list.enum';
 import { apiUrlSelector } from 'src/redux/selectors/config';
+import { usingWithoutAccountSelector } from 'src/redux/selectors/auth';
 
 const List = ({ navigation } : INavigation) => {
   const dispatch = useDispatch();
 
   const list = useSelector(listSelector);
   const apiUrl = useSelector(apiUrlSelector);
+  const usingWithoutAccount = useSelector(usingWithoutAccountSelector);
+
   const [isEditMode, setEditMode] = useState<boolean>(false);
 
   useEffect(() => {
@@ -56,10 +59,12 @@ const List = ({ navigation } : INavigation) => {
   }, [])
 
   useEffect(() => {
-    dispatch(actions.getListAction());
-    getUniqueId().then((deviceId: string) => {
-      dispatch(actions.startListeningAction({ deviceId }));
-    });
+    if (!usingWithoutAccount) {
+      dispatch(actions.getListAction());
+      getUniqueId().then((deviceId: string) => {
+        dispatch(actions.startListeningAction({ deviceId }));
+      });
+    }
   }, [apiUrl]);
 
   const turnEditMode = () => {
@@ -68,11 +73,19 @@ const List = ({ navigation } : INavigation) => {
   };
 
   const onDelete = (_id: string) => {
-    dispatch(actions.removeFromListAction({ _id }))
+    if (usingWithoutAccount) {
+      dispatch(actions.removeFromListReduxAction({ _id }))
+    } else {
+      dispatch(actions.removeFromListAction({ _id }))
+    }
   }
 
   const onUpdateProduct = (_id: string, status: StatusEnum, undoChanges: () => void) => {
-    dispatch(actions.updateProductStatusAction({ _id, status: status === StatusEnum.cart ? StatusEnum.home : StatusEnum.cart, undoChanges }))
+    if (usingWithoutAccount) {
+      dispatch(actions.updateProductStatusReduxWithoutAccountAction({ _id, status: status === StatusEnum.cart ? StatusEnum.home : StatusEnum.cart }))
+    } else {
+      dispatch(actions.updateProductStatusAction({ _id, status: status === StatusEnum.cart ? StatusEnum.home : StatusEnum.cart, undoChanges }))
+    }
   }
 
   const goToAddToList = () => navigation.navigate('AddToList');
