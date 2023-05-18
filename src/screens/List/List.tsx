@@ -60,6 +60,7 @@ const ListScreen = ({ turnEditMode, isEditMode, goToAddToList, list, onDelete, o
           renderItem={renderItem}
           keyExtractor={item => item._id}
           style={styles.container}
+          ListEmptyComponent={<Text style={styles.textListEmpty}>List is empty</Text>}
         />
       </Container>
     </>

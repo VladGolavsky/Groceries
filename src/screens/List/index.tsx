@@ -9,10 +9,11 @@ import ListScreen from './List';
 import * as actions from 'src/redux/actions';
 import { INavigation } from 'src/interfaces/navigation.interface';
 import { listSelector } from 'src/redux/selectors/list';
-import { LayoutAnimation } from 'react-native';
+import { Alert, LayoutAnimation } from 'react-native';
 import { StatusEnum } from 'src/enums/list.enum';
 import { apiUrlSelector, isNetConnectedSelector } from 'src/redux/selectors/config';
 import { usingWithoutAccountSelector } from 'src/redux/selectors/auth';
+import * as ERRORS from 'src/constants/errors';
 
 const List = ({ navigation } : INavigation) => {
   const dispatch = useDispatch();
@@ -68,7 +69,11 @@ const List = ({ navigation } : INavigation) => {
     if (usingWithoutAccount) {
       dispatch(actions.removeFromListReduxAction({ _id }))
     } else {
-      dispatch(actions.removeFromListAction({ _id }))
+      if (isNetConnected) {
+        dispatch(actions.removeFromListAction({ _id }))
+      } else {
+        Alert.alert(ERRORS.CheckInternetConnection);
+      }
     }
   }
 

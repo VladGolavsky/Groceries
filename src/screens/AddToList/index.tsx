@@ -11,6 +11,7 @@ import { loadingSelector } from 'src/redux/selectors';
 import { usingWithoutAccountSelector } from 'src/redux/selectors/auth';
 import { StatusEnum } from 'src/enums/list.enum';
 import * as ERRORS from 'src/constants/errors';
+import { isNetConnectedSelector } from 'src/redux/selectors/config';
 
 
 const AddToList = ({ navigation } : INavigation) => {
@@ -18,6 +19,7 @@ const AddToList = ({ navigation } : INavigation) => {
 
   const { addToList: addToListLoading } = useSelector(loadingSelector);
   const usingWithoutAccount = useSelector(usingWithoutAccountSelector);
+  const isNetConnected = useSelector(isNetConnectedSelector);
 
   const [title, setTitle] = useState<string>('');
   const [error, setError] = useState<string>('');
@@ -40,7 +42,11 @@ const AddToList = ({ navigation } : INavigation) => {
         }));
         navigation.goBack();
       } else {
-        dispatch(actions.addToListAction({ title }))
+        if (isNetConnected) {
+          dispatch(actions.addToListAction({ title }))
+        } else {
+          Alert.alert(ERRORS.CheckInternetConnection);
+        }
       }
     } else {
       setError(ERRORS.FillTitle);
