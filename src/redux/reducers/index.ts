@@ -6,6 +6,7 @@ import errors from './errors';
 import user from './user';
 import list from './list';
 import config from './config';
+import configModal from './config.modal';
 
 const reducer = combineReducers({
   auth,
@@ -14,6 +15,7 @@ const reducer = combineReducers({
   user,
   list,
   config,
+  configModal
 });
 
 export default reducer;

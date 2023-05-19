@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 
 import styles from './styles';
 import { socketConnectionStatusSelector } from 'src/redux/selectors/config';
+import { usingWithoutAccountSelector } from 'src/redux/selectors/auth';
 
 type IHeader = {
   title: string;
@@ -13,6 +14,7 @@ type IHeader = {
 
 const Header = ({ title, renderLeft = () => null, renderRight = () => null } : IHeader) => {
   const socketConnectionStatus = useSelector(socketConnectionStatusSelector);
+  const usingWithoutAccount = useSelector(usingWithoutAccountSelector);
 
   return (
     <View style={styles.container}>
@@ -21,7 +23,11 @@ const Header = ({ title, renderLeft = () => null, renderRight = () => null } : I
       </View>
       <View style={styles.titleContainer}>
         <Text style={styles.textTitle}>{title}</Text>
-        <View style={[styles.dot, !socketConnectionStatus ? styles.emptyDot : {}]} />
+        {
+          !usingWithoutAccount ? (
+            <View style={[styles.dot, !socketConnectionStatus ? styles.emptyDot : {}]} />
+          ) : null
+        }
       </View>
       <View style={styles.rightPart}>
         {renderRight()}

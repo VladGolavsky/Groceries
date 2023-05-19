@@ -8,6 +8,7 @@ import { accessTokenSelector, usingWithoutAccountSelector } from './redux/select
 import { setAuthHeader } from './utils/apiConfig';
 
 const Root: React.FC<INavigation> = ({ navigation }) => {
+
   const accessToken = useSelector(accessTokenSelector);
   const usingWithoutAccount = useSelector(usingWithoutAccountSelector);
 

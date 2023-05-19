@@ -9,7 +9,6 @@ export type ConfigEnumType = configEnum.isValidApiUrl | configEnum.apiUrl | conf
 export interface ConfigReducer {
   isValidApiUrl: boolean;
   apiUrl: string;
-  showSettingsModal: boolean;
   deviceId: string;
   isSocketConnected: boolean;
   isNetConnected: boolean;
@@ -17,3 +16,8 @@ export interface ConfigReducer {
 // export type ConfigReducer = Record<ConfigEnumType, boolean | String>;
 
 export type SetConfigPayload = Partial<{[K in ConfigEnumType]: boolean | String}>;
+
+export type ConfigSettingsReducer = {
+  showSettingsModal: boolean;
+};
+

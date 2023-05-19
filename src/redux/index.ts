@@ -14,6 +14,7 @@ const persistConfig = {
   key: 'groceries',
   storage: AsyncStorage,
   whitelist: ['auth', 'list', 'config'],
+  blackList: ['configModal'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);

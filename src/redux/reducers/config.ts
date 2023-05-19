@@ -5,7 +5,6 @@ import { ConfigReducer, SetConfigPayload } from '../actions/config/config.interf
 const initialState: ConfigReducer = {
   isValidApiUrl: true,
   apiUrl: 'https://groceries.up.railway.app',
-  showSettingsModal: false,
   deviceId: '',
   isSocketConnected: false,
   isNetConnected: false,
