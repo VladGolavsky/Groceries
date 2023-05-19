@@ -1,3 +1,5 @@
+import { IProduct } from "src/interfaces/list.interface";
+
 export interface ISignInAction {
   email: string;
   password: string;
@@ -9,6 +11,7 @@ export interface ISignUpAction {
   userName: string;
   deviceId: string;
   password: string;
+  list?: Array<IProduct>
 };
 
 export interface ISetTokenAction {

@@ -8,6 +8,8 @@ import { INavigation } from 'src/interfaces/navigation.interface';
 import { setErrorAction, signUpAction } from 'src/redux/actions';
 import * as ERRORS from 'src/constants/errors';
 import { errorsSelector, loadingSelector } from 'src/redux/selectors';
+import { usingWithoutAccountSelector } from 'src/redux/selectors/auth';
+import { listStateSelector } from 'src/redux/selectors/list';
 
 const passwordRegEx = /^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/;
 
@@ -16,6 +18,8 @@ const SignUp: React.FC<INavigation> = ({ navigation }) => {
 
   const { signUp: signUpLoading } = useSelector(loadingSelector);
   const { signUp: signUpError } = useSelector(errorsSelector)
+  const usingWithoutAccount = useSelector(usingWithoutAccountSelector);
+  const list = useSelector(listStateSelector)
 
   const [email, setEmail] = useState<string>('');
   const [userName, setUserName] = useState<string>('');
@@ -45,7 +49,11 @@ const SignUp: React.FC<INavigation> = ({ navigation }) => {
       return;
     }
 
-    dispatch(signUpAction({ email, userName, password, deviceId }));
+    if (usingWithoutAccount) {
+      dispatch(signUpAction({ email, userName, password, deviceId, list }));
+    } else {
+      dispatch(signUpAction({ email, userName, password, deviceId }));
+    }
   }
 
   const goBack = () => {

@@ -1,11 +1,11 @@
-import { createDraftSafeSelector } from "@reduxjs/toolkit";
+import { createDraftSafeSelector, createSelector } from "@reduxjs/toolkit";
 import { IRootState } from "..";
 import { StatusEnum } from "src/enums/list.enum";
 
-const listStateSelector = (state: IRootState) => state.list.list || [];
+export const listStateSelector = (state: IRootState) => state.list.list || [];
 export const syncListStateSelector = (state: IRootState) => state.list.syncList || [];
 
-export const mergedListStateSelector = createDraftSafeSelector(
+export const mergedListStateSelector = createSelector(
   [listStateSelector, syncListStateSelector],
   (list, syncList) => {
     return list.map((item) => {
@@ -22,5 +22,5 @@ export const mergedListStateSelector = createDraftSafeSelector(
   }
 )
 
-export const listSelector = createDraftSafeSelector(mergedListStateSelector, (list) => list);
-export const cartListSelector = createDraftSafeSelector(mergedListStateSelector, (list) => list.filter(item => item.status === StatusEnum.cart));
+export const listSelector = createSelector(mergedListStateSelector, (list) => list);
+export const cartListSelector = createSelector(mergedListStateSelector, (list) => list.filter(item => item.status === StatusEnum.cart));

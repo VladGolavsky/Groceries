@@ -70,7 +70,6 @@ function* signUpSaga({ payload } : { payload: ISignUpAction }): Generator {
 
     }
   } catch (e: any) {
-    console.log('e', e)
     if (e?.statusCode) {
       yield put(actions.setErrorAction({ signUp: e?.message }));
     } else {

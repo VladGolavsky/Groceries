@@ -26,7 +26,7 @@ const ListScreen = ({ turnEditMode, isEditMode, goToAddToList, list, onDelete, o
   const renderRight = () => (
     <TouchableOpacity onPress={turnEditMode} style={styles.buttonEditMode} hitSlop={scale(10)}>
       {
-        isEditMode ? <Text style={styles.buttonTextDone}>Done</Text> : <Icon name="create-outline" size={scale(23)} />
+        isEditMode ? <Text style={styles.buttonTextDone}>Done</Text> : <Icon name="create-outline" size={scale(23)} color={black} />
       }
     </TouchableOpacity>
   );

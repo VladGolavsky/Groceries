@@ -10,13 +10,13 @@ import io from 'socket.io-client';
 
 import * as actions from 'src/redux/actions';
 import { apiUrlSelector, deviceIdSelector } from '../selectors/config';
-import { IProduct } from 'src/interfaces/list.interface';
+import { IProducShort, IProduct } from 'src/interfaces/list.interface';
 import { EventChannel, eventChannel } from 'redux-saga';
 import { Socket } from 'socket.io-client';
 
 type SocketHandler = {
   type: string;
-  data: IProduct | any;
+  data: IProduct | Array<IProducShort> | any;
 }
 
 const createSocketChannel = (socket: Socket, deviceId: string) => eventChannel((emit) => {
@@ -47,6 +47,10 @@ const createSocketChannel = (socket: Socket, deviceId: string) => eventChannel((
       handler({type: 'list-create', data});
     })
 
+    socket.on(`list-sync-${deviceId}`, (data: Array<IProducShort>) => {
+      handler({type: 'list-sync', data});
+    })
+
     socket.on(`list-delete-${deviceId}`, (data: IProduct) => {
       handler({type: 'list-delete', data});
     })
@@ -57,6 +61,7 @@ const createSocketChannel = (socket: Socket, deviceId: string) => eventChannel((
       socket.off('error', () => handler({ type: 'disconnected', data: {} }));
       socket.off(`list-update-${deviceId}`, handler);
       socket.off(`list-create-${deviceId}`, handler);
+      socket.off(`list-sync-${deviceId}`, handler);
       socket.off(`list-delete-${deviceId}`, handler);
     };
   });
@@ -85,6 +90,9 @@ function* startListeningSaga({ payload } : { payload: { deviceId: string } }): G
         case 'list-delete':
           yield put(actions.removeFromListReduxAction({ _id: payload?.data?._id }));
           break;
+        case 'list-sync':
+          yield put(actions.updateProductStatusReduxAfterSyncAction(payload?.data));
+          break;
         case 'connected':
           yield put(actions.setSocketConnectionStatusAction(true));
           break;
@@ -97,7 +105,7 @@ function* startListeningSaga({ payload } : { payload: { deviceId: string } }): G
     }
 
   } catch (error) {
-    
+    console.log('error', error)
   }
 }
 

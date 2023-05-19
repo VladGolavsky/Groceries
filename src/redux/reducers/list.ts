@@ -50,7 +50,7 @@ const listReducer = createReducer<IListReducer>({
     }),
   }),
   [actions.updateProductStatusSyncReduxAction.getType()]: (state: IListReducer, payload: IProducShort) => {
-    let newSyncList: Array<IProducShort> = [];
+    let newSyncList: Array<IProducShort> = state.syncList;
     if (state.syncList?.find((item) => item._id === payload._id)) {
       newSyncList = state.syncList?.filter((item) => item._id !== payload._id);
     } else {
@@ -61,6 +61,23 @@ const listReducer = createReducer<IListReducer>({
       ...state,
       syncList: newSyncList,
     }
+  },
+  [actions.updateProductStatusReduxAfterSyncAction.getType()]: (state: IListReducer, payload: Array<IProducShort>) => {
+    const updateList = state.list.map((item) => {
+      const foundItem = payload?.find((payloadItem) => payloadItem._id === item._id);
+      if (foundItem) {
+        return {
+          ...item,
+          status: foundItem.status,
+        };
+      }
+
+      return item;
+    });
+    return {
+      ...state,
+      list: updateList,
+    };
   },
   [actions.clearSyncAction.getType()]: (state: IListReducer) => ({
     ...state,

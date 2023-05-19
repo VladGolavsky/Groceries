@@ -29,7 +29,8 @@ const SettingsModal = () => {
   };
 
   const onApply = () => {
-    dispatch(actions.setConfigAction({ apiUrl: url, showSettingsModal: false }));
+    dispatch(actions.setConfigAction({ apiUrl: url }));
+    dispatch(actions.setShowSettingsModalAction(false));
   }
 
   const goToLogin = () => {

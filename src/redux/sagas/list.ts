@@ -96,9 +96,15 @@ function* uploadProductStatusesFromReduxSaga(): Generator {
     yield put(setLoadingAction({ globalApp: true }));
 
     const syncList = (yield select(syncListStateSelector)) as Array<IProducShort>;
+    const excludeId = (yield select(deviceIdSelector)) as string;
 
     if (syncList.length) {
-      console.log('aksdjfhalsdkfjahsdlfk')
+      const { data } = (yield call(post, endpoints.updateProductStatusAfterOfflie(), { list: syncList, excludeId })) as { data: Array<IProducShort> };
+
+      if (data?.length) {
+        yield put(actions.updateProductStatusReduxAfterSyncAction(data));
+        yield put(actions.clearSyncAction());
+      }
 
     } else {
       yield getListSaga();

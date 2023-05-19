@@ -10,6 +10,7 @@ import { IProduct } from "src/interfaces/list.interface";
 import { StatusEnum } from "src/enums/list.enum";
 
 import styles from "./styles";
+import { black } from "src/constants/colors";
 
 interface ICartListScreen {
   cartList: Array<IProduct>;
@@ -25,7 +26,7 @@ const CartListScreen = ({ cartList, turnEditMode, isEditMode, goToAddToList, onD
   const renderRight = () => (
     <TouchableOpacity onPress={turnEditMode} style={styles.buttonEditMode} hitSlop={scale(10)}>
       {
-        isEditMode ? <Text style={styles.buttonTextDone}>Done</Text> : <Icon name="create-outline" size={scale(23)} />
+        isEditMode ? <Text style={styles.buttonTextDone}>Done</Text> : <Icon name="create-outline" size={scale(23)} color={black} />
       }
     </TouchableOpacity>
   );
@@ -34,14 +35,14 @@ const CartListScreen = ({ cartList, turnEditMode, isEditMode, goToAddToList, onD
     if (isEditMode) {
       return (
         <TouchableOpacity onPress={goToAddToList} style={styles.buttonEditMode} hitSlop={scale(10)}>
-          <Icon name="add-outline" size={scale(26)} />
+          <Icon name="add-outline" size={scale(26)} color={black} />
         </TouchableOpacity>
       );
     }
     
     return (
       <TouchableOpacity onPress={goToSettings} style={styles.buttonEditMode} hitSlop={scale(10)}>
-        <Icon name="settings-outline" size={scale(26)} />
+        <Icon name="settings-outline" size={scale(26)} color={black} />
       </TouchableOpacity>
     );
   }
