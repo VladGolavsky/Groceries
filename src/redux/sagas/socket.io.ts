@@ -16,7 +16,7 @@ import { Socket } from 'socket.io-client';
 
 type SocketHandler = {
   type: string;
-  data: IProduct;
+  data: IProduct | any;
 }
 
 const createSocketChannel = (socket: Socket, deviceId: string) => eventChannel((emit) => {

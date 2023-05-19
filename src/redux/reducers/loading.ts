@@ -10,11 +10,11 @@ const initialState: ILoadingReducer = {
 };
 
 const loadingReducer = createReducer<ILoadingReducer>({
-  [actions.setLoadingAction]: (state: ILoadingReducer, payload: ISetLoadingAction) => ({
+  [actions.setLoadingAction.getType()]: (state: ILoadingReducer, payload: ISetLoadingAction) => ({
     ...state,
     ...payload,
   }),
-  [actions.logoutAction]: () => ({
+  [actions.logoutAction.getType()]: () => ({
     ...initialState,
   }),
 }, initialState);

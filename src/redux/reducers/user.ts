@@ -21,11 +21,11 @@ const initialState = {
 };
 
 const userReducer = createReducer<IUser>({
-  [actions.setUserAction]: (state: IUser, payload: IUser) => ({
+  [actions.setUserAction.getType()]: (state: IUser, payload: IUser) => ({
     ...state,
     ...payload,
   }),
-  [actions.logoutAction]: () => ({
+  [actions.logoutAction.getType()]: () => ({
     ...initialState,
   }),
 }, initialState);

@@ -14,19 +14,19 @@ const initialState = {
 };
 
 const listReducer = createReducer<IListReducer>({
-  [actions.setListAction]: (state: IListReducer, list: Array<IProduct>) => ({
+  [actions.setListAction.getType()]: (state: IListReducer, list: Array<IProduct>) => ({
     ...state,
     list,
   }),
-  [actions.addToListReduxAction]: (state: IListReducer, payload: IProduct) => ({
+  [actions.addToListReduxAction.getType()]: (state: IListReducer, payload: IProduct) => ({
     ...state,
     list: state?.list?.concat(payload),
   }),
-  [actions.removeFromListReduxAction]: (state: IListReducer, payload: IRemoveFromListAction) => ({
+  [actions.removeFromListReduxAction.getType()]: (state: IListReducer, payload: IRemoveFromListAction) => ({
     ...state,
     list: state?.list?.filter(item => item._id !== payload._id)
   }),
-  [actions.updateProductStatusReduxAction]: (state: IListReducer, payload: IProduct) => ({
+  [actions.updateProductStatusReduxAction.getType()]: (state: IListReducer, payload: IProduct) => ({
     ...state,
     list: state?.list?.map((item) => {
       if (item._id === payload._id) {
@@ -36,7 +36,7 @@ const listReducer = createReducer<IListReducer>({
       return item;
     })
   }),
-  [actions.updateProductStatusReduxWithoutAccountAction]: (state: IListReducer, payload: IUpdateProductStatusReduxWithoutAccountAction) => ({
+  [actions.updateProductStatusReduxWithoutAccountAction.getType()]: (state: IListReducer, payload: IUpdateProductStatusReduxWithoutAccountAction) => ({
     ...state,
     list: state?.list?.map((item) => {
       if (item._id === payload._id) {
@@ -49,7 +49,7 @@ const listReducer = createReducer<IListReducer>({
       return item;
     }),
   }),
-  [actions.updateProductStatusSyncReduxAction]: (state: IListReducer, payload: IProducShort) => {
+  [actions.updateProductStatusSyncReduxAction.getType()]: (state: IListReducer, payload: IProducShort) => {
     let newSyncList: Array<IProducShort> = [];
     if (state.syncList?.find((item) => item._id === payload._id)) {
       newSyncList = state.syncList?.filter((item) => item._id !== payload._id);
@@ -62,11 +62,11 @@ const listReducer = createReducer<IListReducer>({
       syncList: newSyncList,
     }
   },
-  [actions.clearSyncAction]: (state: IListReducer) => ({
+  [actions.clearSyncAction.getType()]: (state: IListReducer) => ({
     ...state,
     syncList: []
   }),
-  [actions.logoutAction]: () => ({
+  [actions.logoutAction.getType()]: () => ({
     ...initialState,
   }),
 }, initialState);

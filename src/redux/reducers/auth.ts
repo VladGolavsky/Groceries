@@ -15,16 +15,16 @@ const initialState: IAuthReducer = {
 };
 
 const authReducer = createReducer<IAuthReducer>({
-  [actions.setTokensAction]: (state: IAuthReducer, payload: ISetTokenAction) => ({
+  [actions.setTokensAction.getType()]: (state: IAuthReducer, payload: ISetTokenAction) => ({
     ...state,
     usingWithoutAccount: false,
     ...payload,
   }),
-  [actions.setUsingWithoutAccountAction]: (state: IAuthReducer, usingWithoutAccount: boolean) => ({
+  [actions.setUsingWithoutAccountAction.getType()]: (state: IAuthReducer, usingWithoutAccount: boolean) => ({
     ...initialState,
     usingWithoutAccount,
   }),
-  [actions.logoutAction]: () => ({
+  [actions.logoutAction.getType()]: () => ({
     ...initialState,
   }),
 }, initialState);

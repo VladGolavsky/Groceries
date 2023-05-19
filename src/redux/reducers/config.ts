@@ -11,26 +11,26 @@ const initialState: ConfigReducer = {
 };
 
 const configReducer = createReducer<ConfigReducer>({
-  [actions.setConfigAction]: (state: ConfigReducer, payload: SetConfigPayload) => ({
+  [actions.setConfigAction.getType()]: (state: ConfigReducer, payload: SetConfigPayload) => ({
     ...state,
     ...payload,
   }),
-  [actions.setDefaultConfigAction]: () => ({
+  [actions.setDefaultConfigAction.getType()]: () => ({
     ...initialState,
   }),
-  [actions.setShowSettingsModalAction]: (state: ConfigReducer, showSettingsModal: boolean) => ({
+  [actions.setShowSettingsModalAction.getType()]: (state: ConfigReducer, showSettingsModal: boolean) => ({
     ...state,
     showSettingsModal,
   }),
-  [actions.setDeviceIdAction]: (state: ConfigReducer, deviceId: string) => ({
+  [actions.setDeviceIdAction.getType()]: (state: ConfigReducer, deviceId: string) => ({
     ...state,
     deviceId,
   }),
-  [actions.setSocketConnectionStatusAction]: (state: ConfigReducer, isSocketConnected: boolean) => ({
+  [actions.setSocketConnectionStatusAction.getType()]: (state: ConfigReducer, isSocketConnected: boolean) => ({
     ...state,
     isSocketConnected,
   }),
-  [actions.setNetConnectionStatusAction]: (state: ConfigReducer, isNetConnected: boolean) => ({
+  [actions.setNetConnectionStatusAction.getType()]: (state: ConfigReducer, isNetConnected: boolean) => ({
     ...state,
     isNetConnected,
   }),

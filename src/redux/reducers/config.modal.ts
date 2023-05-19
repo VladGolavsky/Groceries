@@ -7,7 +7,7 @@ const initialState: ConfigSettingsReducer = {
 };
 
 const configModalReducer = createReducer<ConfigSettingsReducer>({
-  [actions.setShowSettingsModalAction]: (state: ConfigSettingsReducer, showSettingsModal: boolean) => ({
+  [actions.setShowSettingsModalAction.getType()]: (state: ConfigSettingsReducer, showSettingsModal: boolean) => ({
     showSettingsModal,
   }),
 }, initialState);

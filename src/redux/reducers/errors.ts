@@ -8,11 +8,11 @@ const initialState: IErrorReducer = {
 };
 
 const errorsReducer = createReducer<IErrorReducer>({
-  [actions.setErrorAction]: (state: IErrorReducer, payload: ISetErrorAction) => ({
+  [actions.setErrorAction.getType()]: (state: IErrorReducer, payload: ISetErrorAction) => ({
     ...state,
     ...payload,
   }),
-  [actions.logoutAction]: () => ({
+  [actions.logoutAction.getType()]: () => ({
     ...initialState,
   }),
 }, initialState);
