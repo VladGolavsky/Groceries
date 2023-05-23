@@ -11,6 +11,8 @@ import { StatusEnum } from "src/enums/list.enum";
 
 import styles from "./styles";
 import { black } from "src/constants/colors";
+import Button from "src/components/Button";
+import EmptyList from "src/components/EmptyList";
 
 interface ICartListScreen {
   cartList: Array<IProduct>;
@@ -58,7 +60,7 @@ const CartListScreen = ({ cartList, turnEditMode, isEditMode, goToAddToList, onD
         renderItem={renderItem}
         keyExtractor={item => item._id}
         style={styles.container}
-        ListEmptyComponent={<Text style={styles.textListEmpty}>List is empty</Text>}
+        ListEmptyComponent={<EmptyList goToAddList={goToAddToList} />}
       />
     </Container>
   );

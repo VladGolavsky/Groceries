@@ -18,11 +18,5 @@ export default StyleSheet.create({
     color: black,
     fontSize: scale(19),
     letterSpacing: -0.9
-  },
-  textListEmpty: {
-    marginTop: scale(20),
-    textAlign: 'center',
-    fontSize: scale(20),
-    color: black,
-  },
+  }
 });

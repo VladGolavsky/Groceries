@@ -52,7 +52,7 @@ const SignUpScreen: React.FC<ISignUpScreen> = ({
   return (
     <Container>
       <DismissKeyboard>
-        <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={Platform.OS === 'android' ? 30 : 50} style={styles.container}>
+        <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={Platform.OS === 'android' ? 50 : 50} style={styles.container}>
           <TouchableOpacity onPress={goBack} style={styles.buttonGoBack} hitSlop={10}>
             <Icon name="chevron-left" color={black} size={moderateScale(22)}/>
           </TouchableOpacity>

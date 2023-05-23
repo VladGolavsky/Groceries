@@ -56,6 +56,7 @@ const SignIn: React.FC<INavigation> = ({ navigation }) => {
   }
   
   const goToSignUp = () => {
+    dispatch(actions.setErrorAction({ signUp: '' }));
     navigation.navigate('SignUp')
   }
 

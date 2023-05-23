@@ -10,6 +10,7 @@ import SwipeableRow from "src/components/SwipeableRow";
 import { IProduct } from "src/interfaces/list.interface";
 import { StatusEnum } from "src/enums/list.enum";
 import { black } from "src/constants/colors";
+import EmptyList from "src/components/EmptyList";
 
 
 interface IListScreen {
@@ -60,7 +61,7 @@ const ListScreen = ({ turnEditMode, isEditMode, goToAddToList, list, onDelete, o
           renderItem={renderItem}
           keyExtractor={item => item._id}
           style={styles.container}
-          ListEmptyComponent={<Text style={styles.textListEmpty}>List is empty</Text>}
+          ListEmptyComponent={<EmptyList goToAddList={goToAddToList} />}
         />
       </Container>
     </>

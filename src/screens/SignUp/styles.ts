@@ -18,7 +18,7 @@ export default StyleSheet.create({
     marginTop: verticalScale(30),
   },
   buttonContainer: {
-    marginTop: verticalScale(30),
+    marginTop: verticalScale(14),
   },
   textInputAdditionStyles: {
     marginBottom: verticalScale(20)
@@ -32,10 +32,12 @@ export default StyleSheet.create({
   },
   textErrorContainer: {
     marginTop: scale(5),
-    height: moderateScale(14),
+    paddingLeft: scale(20),
+    height: moderateScale(28),
     alignSelf: 'flex-end',
   },
   textError: {
+    textAlign: 'right',
     color: red,
     fontSize: moderateScale(10),
     fontWeight: '500',

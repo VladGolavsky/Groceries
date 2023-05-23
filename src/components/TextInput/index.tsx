@@ -23,6 +23,7 @@ const TextInput = ({
   onSubmitEditing = () => {},
   returnKeyType = 'default',
   maxLength,
+  autoFocus = false,
 } : TextInputProps & ITextInputComponent, ref: ForwardedRef<RNTextInput>) => {
   const [secure, setSecure] = useState(withSecure);
 
@@ -45,6 +46,7 @@ const TextInput = ({
           onSubmitEditing={onSubmitEditing}
           returnKeyType={returnKeyType}
           maxLength={maxLength}
+          autoFocus={autoFocus}
         />
         {
           withSecure && (
